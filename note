@@ -1,0 +1,58 @@
+opendir, readdir and closedir use for getting file/directory basic information.
+stat, lstat use for getting more file information.
+time, ctime use for getting time (use in ls -l).
+
+
+Plan
+- read the subject >>> ok
+- check out available command >>> ok
+- implement prototype of binary tree >>> ok
+- list all the behaviors of program
+- design program structure
+- implement the program
+- handle error
+- add some bonus
+
+
+The program will have 3 parts
+1. parser
+2. inserter
+3. print
+
+
+Flag
+mandatory
+l = show more detail
+R = recursive
+a = show all files
+r = reverse order
+t = sort by mod time, new first
+
+If there are multiple arguments, it's actually run one after the other and also show the path of each one above the result.
+
+
+Criteria
+- what to insert
+    R = recursive (mutual)
+    a = all (mutual)
+    A = all but no . and .. (mutual but overwrite a)
+    d = only argument path (overwrite other flags)
+
+- data for each insert
+    l = show more info (unique)
+    t = need mod time
+    S = need size
+for optimization: if doesn't have above flag, don't run stat()
+
+- sort by
+    r = reverse (mutual)
+    t = mod time (unique)
+    S = size (unique)
+
+- how to print
+    l = one file per line
+    1 = one file per line
+    Q = add double quote to filename (mutual)
+    p = add / to directory
+    g = no owner
+    G = no group
