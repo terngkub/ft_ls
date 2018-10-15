@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nkamolba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/15 19:33:02 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/10/15 19:48:08 by nkamolba         ###   ########.fr       */
+/*   Created: 2017/11/09 15:10:45 by nkamolba          #+#    #+#             */
+/*   Updated: 2017/11/10 14:15:48 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "libft.h"
 
-int main(int argc, char **argv)
+void	ft_lstdel(t_list **alst, void (*del)(void *, size_t))
 {
-    if (argc == 1)
-        process_path(".");
-    else
-        process_path(argv[1]);
-    return (0);
+	t_list	*temp;
+
+	while (*alst)
+	{
+		temp = (*alst)->next;
+		ft_lstdelone(alst, del);
+		*alst = temp;
+	}
 }

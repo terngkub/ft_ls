@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nkamolba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/15 19:33:02 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/10/15 19:48:08 by nkamolba         ###   ########.fr       */
+/*   Created: 2017/11/08 13:22:13 by nkamolba          #+#    #+#             */
+/*   Updated: 2017/11/08 13:25:19 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "libft.h"
 
-int main(int argc, char **argv)
+char	*ft_strrchr(const char *s, int c)
 {
-    if (argc == 1)
-        process_path(".");
-    else
-        process_path(argv[1]);
-    return (0);
+	char	*ptr;
+
+	ptr = NULL;
+	while (*s)
+	{
+		if (*s == c)
+			ptr = (char *)s;
+		s++;
+	}
+	if (c == '\0')
+		ptr = (char *)s;
+	return (ptr);
 }

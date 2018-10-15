@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strfreecat_back.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nkamolba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/15 19:33:02 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/10/15 19:48:08 by nkamolba         ###   ########.fr       */
+/*   Created: 2017/11/24 12:55:39 by nkamolba          #+#    #+#             */
+/*   Updated: 2017/11/27 17:14:38 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "libft.h"
 
-int main(int argc, char **argv)
+char	*ft_strfreecat_back(char **str1, char *str2)
 {
-    if (argc == 1)
-        process_path(".");
-    else
-        process_path(argv[1]);
-    return (0);
+	char	*tmp;
+
+	if (!(tmp = ft_strjoin(*str1, str2)))
+		return (NULL);
+	free(*str1);
+	*str1 = tmp;
+	return (*str1);
 }

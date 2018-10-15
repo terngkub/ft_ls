@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nkamolba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/15 19:33:02 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/10/15 19:48:08 by nkamolba         ###   ########.fr       */
+/*   Created: 2017/11/08 14:05:37 by nkamolba          #+#    #+#             */
+/*   Updated: 2017/11/08 14:10:41 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "libft.h"
 
-int main(int argc, char **argv)
+int	ft_isdigit(int c)
 {
-    if (argc == 1)
-        process_path(".");
-    else
-        process_path(argv[1]);
-    return (0);
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
 }

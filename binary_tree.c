@@ -1,59 +1,65 @@
-#include <stdlib.h>
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   binary_tree.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/10/15 19:55:19 by nkamolba          #+#    #+#             */
+/*   Updated: 2018/10/15 20:41:24 by nkamolba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-typedef struct      s_node {
-    int             data;
-    struct s_node   *left;
-    struct s_node   *right;
-}                   t_node;
+#include "ft_ls.h"
 
-t_node *ft_bt_new(int data)
+t_ls_node  *ft_bt_new(t_ls_data *data)
 {
-    t_node *root;
+    t_ls_node *node;
 
-    root = (t_node *)malloc(sizeof(t_node));
-    root->data = data;
-    root->left = NULL;
-    root->right = NULL;
-    return root;
+    node = (t_ls_node *)malloc(sizeof(t_ls_node));
+    node->data = data;
+    node->left = NULL;
+    node->right = NULL;
+    return node;
 }
 
-void ft_bt_insert(t_node *root, int data)
+void    ft_bt_insert(t_ls_node *node, t_ls_data *data)
 {
-    if (data < root->data)
+    if (data < node->data)
     {
-        if (root->left == NULL)
-            root->left = ft_bt_new(data);
+        if (node->left == NULL)
+            node->left = ft_bt_new(data);
         else
-            ft_bt_insert(root->left, data);
+            ft_bt_insert(node->left, data);
     }
-    else if (data > root->data)
+    else if (data > node->data)
     {
-        if (root->right == NULL)
-            root->right = ft_bt_new(data);
+        if (node->right == NULL)
+            node->right = ft_bt_new(data);
         else
-            ft_bt_insert(root->right, data);
+            ft_bt_insert(node->right, data);
     }
 }
 
-void ft_bt_delete(t_node *root)
+void    ft_bt_delete(t_ls_node *node)
 {
-    if (root == NULL)
+    if (node == NULL)
         return;
-    ft_bt_delete(root->left);
-    ft_bt_delete(root->right);
-    free(root);
+    ft_bt_delete(node->left);
+    ft_bt_delete(node->right);
+    free(node);
 }
 
-void ft_bt_print(t_node *root)
+void    ft_bt_print(t_ls_node *node)
 {
-    if (root == NULL)
+    if (node == NULL)
         return;
-    ft_bt_print(root->left);
-    printf("%d\n", root->data);
-    ft_bt_print(root->right);
+    ft_bt_print(node->left);
+    //ft_printf("%d\n", node->data);
+    ft_bt_print(node->right);
 }
 
+/*
 int main(void)
 {
     t_node *bt;
@@ -70,3 +76,4 @@ int main(void)
     ft_bt_delete(bt);
     return (0);
 }
+*/
