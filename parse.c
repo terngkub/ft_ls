@@ -12,44 +12,25 @@
 
 #include "ft_ls.h"
 
-/*
-void parse_args(int argc, char **argv)
-{
-    while ()
-    {
-
-    }
-}
-
-void parse_flag()
-{
-
-}
-*/
-
-// store a list of flag
-// store a list of path
-// process each path in queue
-// if r when process path 
-
-
 void process_path(const char *path)
 {
-    DIR             *dip;
-    struct dirent   *dit;
+    DIR             *dir;
+    struct dirent   *dirent;
+    t_ls_data       *data;
+    t_ls_node       *node;
 
-    dip = opendir(path);
-    
-    while (1)
+    dir = opendir(path);
+    node = ft_bt_new(NULL);
+    while ((dirent = readdir(dir)))
     {
-        dit = readdir(dip);
-        if (dit == NULL)
-            break;
-        ft_printf("%s\t", dit->d_name);
+        data = (t_ls_data *)malloc(sizeof(t_ls_data));
+        data->name = ft_strdup(dirent->d_name);
+        ft_bt_insert(node, data, &compare_name);
     }
-    ft_putchar('\n');
-    closedir(dip);
+    closedir(dir);
+    ft_bt_print(node);
 }
+
 
 /*
 trying stat

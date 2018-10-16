@@ -13,6 +13,7 @@
 #ifndef FT_LS_H
 # define FT_LS_H
 
+# include <stdio.h>
 # include "libft/libft.h"
 # include <dirent.h>
 # include <stdlib.h>
@@ -28,8 +29,8 @@
 
 typedef struct	 		s_ls_data
 {
-	struct dirent		*dirent
-	struct stat			*stat
+	char				*name;
+	struct stat			*stat;
 }						t_ls_data;
 
 typedef struct			s_ls_node
@@ -39,9 +40,11 @@ typedef struct			s_ls_node
 	struct s_ls_node	*right;
 }						t_ls_node;
 
-t_node					*ft_bt_new(int data);
-void					ft_bt_insert(t_node *root, int data);
-void					ft_bt_delete(t_node *root);
-void					ft_bt_print(t_node *root);
+void process_path(const char *path);
+t_ls_node  *ft_bt_new(t_ls_data *data);
+void    ft_bt_insert(t_ls_node *node, t_ls_data *data, int (*compare)(t_ls_data *, t_ls_data*));
+void    ft_bt_delete(t_ls_node *node);
+void    ft_bt_print(t_ls_node *node);
+int     compare_name(t_ls_data *a, t_ls_data *b);
 
 #endif
