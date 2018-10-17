@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   ft_ls.h											:+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: nkamolba <nkamolba@student.42.fr>		  +#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2018/10/15 19:33:38 by nkamolba		  #+#	#+#			 */
-/*   Updated: 2018/10/15 20:11:10 by nkamolba		 ###   ########.fr	   */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_ls.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/10/17 20:35:55 by nkamolba          #+#    #+#             */
+/*   Updated: 2018/10/17 20:36:39 by nkamolba         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_LS_H
@@ -26,25 +26,29 @@
 ** Binary Tree
 */
 
-
 typedef struct	 		s_ls_data
 {
 	char				*name;
 	struct stat			*stat;
 }						t_ls_data;
 
-typedef struct			s_ls_node
+typedef struct			s_btree
 {
-	t_ls_data			*data;
-	struct s_ls_node	*left;
-	struct s_ls_node	*right;
-}						t_ls_node;
+	void				*item;
+	struct s_btree		*left;
+	struct s_btree		*right;
+}						t_btree;
+
+t_btree	*btree_create_node(void *item);
+void    btree_insert(t_btree **root, void *item, int (*compare)(void *, void *));
+void    btree_apply_prefix(t_btree *root, void (*applyf)(void *));
+void    btree_apply_infix(t_btree *root, void (*applyf)(void *));
+void    btree_apply_suffix(t_btree *root, void (*applyf)(void *));
+
+/*
+** Parsing
+*/
 
 void process_path(const char *path);
-t_ls_node  *ft_bt_new(t_ls_data *data);
-void    ft_bt_insert(t_ls_node *node, t_ls_data *data, int (*compare)(t_ls_data *, t_ls_data*));
-void    ft_bt_delete(t_ls_node *node);
-void    ft_bt_print(t_ls_node *node);
-int     compare_name(t_ls_data *a, t_ls_data *b);
 
 #endif

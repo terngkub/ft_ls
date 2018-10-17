@@ -6,72 +6,64 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 19:55:19 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/10/15 20:41:24 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/10/17 20:37:05 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_ls_node  *ft_bt_new(t_ls_data *data)
+t_btree *btree_create_node(void *item)
 {
-    t_ls_node *node;
+    t_btree *node;
 
-    node = (t_ls_node *)malloc(sizeof(t_ls_node));
-    node->data = data;
-    node->left = NULL;
-    node->right = NULL;
-    return node;
+    if ((node = (void *)malloc(sizeof(t_btree))))
+    {
+        node->item = item;
+        node->left = NULL;
+        node->right = NULL;
+    }
+    return (node);
 }
 
-void    ft_bt_insert(t_ls_node *node, t_ls_data *data, int (*compare)(t_ls_data *, t_ls_data*))
+void    btree_insert(t_btree **root, void *item, int (*compare)(void *, void *))
 {
-    int compare_result;
-
-    if (node->data == NULL)
+    if (*root)
     {
-        node->data = data;
-        return;
-    }
-    compare_result = (*compare)(data, node->data);
-    if (compare_result < 0)
-    {
-        if (node->left == NULL)
-            node->left = ft_bt_new(data);
+        if ((*compare)(item, (*root)->item) < 0)
+            btree_insert(&((*root)->left), item, compare);
         else
-            ft_bt_insert(node->left, data, compare);
+            btree_insert(&((*root)->right), item, compare);
     }
-    else if (compare_result > 0)
+    else
+        *root = btree_create_node(item);
+}
+
+void    btree_apply_prefix(t_btree *root, void (*applyf)(void *))
+{
+    if (root)
     {
-        if (node->right == NULL)
-            node->right = ft_bt_new(data);
-        else
-            ft_bt_insert(node->right, data, compare);
+        (*applyf)(root->item);
+        btree_apply_prefix(root->left, applyf);
+        btree_apply_prefix(root->right, applyf);
     }
 }
 
-void    ft_bt_delete(t_ls_node *node)
+void    btree_apply_infix(t_btree *root, void (*applyf)(void *))
 {
-    if (node == NULL)
-        return;
-    ft_bt_delete(node->left);
-    ft_bt_delete(node->right);
-    free(node->data->name);
-    free(node->data->stat);
-    free(node->data);
-    free(node);
+    if (root)
+    {
+        btree_apply_infix(root->left, applyf);
+        (*applyf)(root->item);
+        btree_apply_infix(root->right, applyf);
+    }
 }
 
-void    ft_bt_print(t_ls_node *node)
+void    btree_apply_suffix(t_btree *root, void (*applyf)(void *))
 {
-    if (node == NULL)
-        return;
-    ft_bt_print(node->left);
-    //ft_printf("name: %s mode: %d\n", node->data->dirent->d_name, node->data->stat->st_mode);
-    ft_printf("%s\n", node->data->name);
-    ft_bt_print(node->right);
-}
-
-int     compare_name(t_ls_data *a, t_ls_data *b)
-{
-    return ft_strcmp(a->name, b->name);
+    if (root)
+    {
+        btree_apply_suffix(root->left, applyf);
+        btree_apply_suffix(root->right, applyf);
+        (*applyf)(root->item);
+    }
 }
