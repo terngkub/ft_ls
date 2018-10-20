@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nattapol <nattapol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 20:35:55 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/10/17 20:36:39 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/10/21 00:52:13 by nattapol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,6 @@
 ** Binary Tree
 */
 
-typedef struct	 		s_ls_data
-{
-	char				*name;
-	struct stat			*stat;
-}						t_ls_data;
-
 typedef struct			s_btree
 {
 	void				*item;
@@ -46,9 +40,26 @@ void    btree_apply_infix(t_btree *root, void (*applyf)(void *));
 void    btree_apply_suffix(t_btree *root, void (*applyf)(void *));
 
 /*
+** Processing
+*/
+
+typedef struct			s_dir_data
+{
+	char				*dir_name;
+	t_btree				*file_tree;
+}						t_dir_data;
+
+typedef struct	 		s_file_data
+{
+	char				*file_name;
+	struct stat			*stat;
+}						t_file_data;
+
+void process_path(t_btree **dir_tree, const char *path);
+
+/*
 ** Parsing
 */
 
-void process_path(const char *path);
 
 #endif
