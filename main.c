@@ -6,24 +6,11 @@
 /*   By: nattapol <nattapol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 19:33:02 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/10/21 19:31:35 by nattapol         ###   ########.fr       */
+/*   Updated: 2018/10/21 22:47:48 by nattapol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
-void print_file_tree(void *file_data)
-{
-    ft_printf("%s   ", ((t_file_data *)file_data)->file_name);
-}
-
-void print_dir_tree(void *dir_data)
-{
-    ft_printf("%s\n", ((t_dir_data *)dir_data)->dir_name);
-    btree_apply_infix(((t_dir_data *)dir_data)->file_tree, print_file_tree);
-    ft_putchar('\n');
-    ft_putchar('\n');
-}
 
 void    init_ls_data(t_ls_data *ls_data)
 {

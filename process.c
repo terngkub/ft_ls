@@ -6,21 +6,11 @@
 /*   By: nattapol <nattapol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 19:47:59 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/10/21 20:06:38 by nattapol         ###   ########.fr       */
+/*   Updated: 2018/10/21 23:02:33 by nattapol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
-int     btree_file_strcmp(void * a, void *b)
-{
-    return ft_strcmp(((t_file_data *)a)->file_name, ((t_file_data *)b)->file_name);
-}
-
-int     btree_dir_strcmp(void * a, void *b)
-{
-    return ft_strcmp(((t_dir_data *)a)->dir_name, ((t_dir_data *)b)->dir_name);
-}
 
 t_dir_data *create_dir_data(const char *dir_name)
 {
@@ -44,6 +34,23 @@ t_file_data    *create_file_data(char *file_name, const char *file_path)
     return (file_data);
 }
 
+void     handle_option_R(t_btree **dir_tree, t_options *options, const char *file_path, t_file_data *file_data)
+{
+    if (options->R == 1
+            && ft_strcmp(file_data->file_name, ".") != 0
+            && ft_strcmp(file_data->file_name, "..") != 0
+            && S_ISDIR(file_data->stat->st_mode))
+        process_path(dir_tree, options, file_path);
+}
+
+int    check_options(char *name, t_options *options)
+{
+    if (((ft_strcmp(name, ".") == 0 || ft_strcmp(name, "..") == 0) && !options->a)
+            || (name[0] == '.' && !(options->a || options->A)))
+        return 0;
+    return 1;
+}
+
 void    process_path(t_btree **dir_tree, t_options *options, const char *path)
 {
     DIR             *dir;
@@ -57,14 +64,13 @@ void    process_path(t_btree **dir_tree, t_options *options, const char *path)
     btree_insert(dir_tree, dir_data, btree_dir_strcmp);
     while ((dirent = readdir(dir)))
     {
-        file_path = ft_strjoin(path, ft_strjoin("/", dirent->d_name));
-        file_data = create_file_data(dirent->d_name, file_path);
-        btree_insert(&(dir_data->file_tree), file_data, btree_file_strcmp);
-        if (options->R == 1
-                && ft_strcmp(file_data->file_name, ".") != 0
-                && ft_strcmp(file_data->file_name, "..") != 0
-                && S_ISDIR(file_data->stat->st_mode))
-            process_path(dir_tree, options, file_path);
+        if (check_options(dirent->d_name, options))
+        {
+            file_path = ft_strjoin(path, ft_strjoin("/", dirent->d_name));
+            file_data = create_file_data(dirent->d_name, file_path);
+            btree_insert(&(dir_data->file_tree), file_data, btree_file_strcmp);
+            handle_option_R(dir_tree, options, file_path, file_data);
+        }
     }
     closedir(dir);
 }

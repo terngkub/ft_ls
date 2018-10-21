@@ -39,7 +39,6 @@ Criteria
     R = recursive (mutual)
     a = all (mutual)
     A = all but no . and .. (mutual but overwrite a)
-    d = only argument path (overwrite other flags)
 
 - data for each insert
     l = show more info (unique)

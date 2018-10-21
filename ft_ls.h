@@ -6,7 +6,7 @@
 /*   By: nattapol <nattapol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 20:35:55 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/10/21 19:34:39 by nattapol         ###   ########.fr       */
+/*   Updated: 2018/10/21 23:03:09 by nattapol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void    btree_apply_infix(t_btree *root, void (*applyf)(void *));
 void    btree_apply_suffix(t_btree *root, void (*applyf)(void *));
 
 /*
-** Parsing
+** Parse
 */
 
 typedef struct			s_options
@@ -48,7 +48,6 @@ typedef struct			s_options
 	char	R;
 	char	a;
 	char	A;
-	char	d;
 	char	l;
 	char	t;
 	char	S;
@@ -70,7 +69,14 @@ typedef	struct			s_ls_data
 void        parse_args(t_ls_data *ls_data, int argc, char **argv);
 
 /*
-** Processing
+** Compare
+*/
+
+int     btree_file_strcmp(void * a, void *b);
+int     btree_dir_strcmp(void * a, void *b);
+
+/*
+** Process
 */
 
 typedef struct			s_dir_data
@@ -87,6 +93,13 @@ typedef struct	 		s_file_data
 
 void	process_queue(t_ls_data *ls_data);
 void	process_path(t_btree **dir_tree, t_options *options, const char *path);
+
+/*
+** Print
+*/
+
+void print_file_tree(void *file_data);
+void print_dir_tree(void *dir_data);
 
 
 #endif
