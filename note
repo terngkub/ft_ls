@@ -7,9 +7,12 @@ Plan
 - read the subject >>> ok
 - check out available command >>> ok
 - implement prototype of binary tree >>> ok
-- list all the behaviors of program
-- design program structure
-- implement the program
+- list all the behaviors of program >>> ok
+- design program structure >>> ok
+- implement ls -R
+- implement parser
+- implement printer
+- handle memory leak
 - handle error
 - add some bonus
 

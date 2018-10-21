@@ -6,7 +6,7 @@
 #    By: nattapol <nattapol@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/15 19:35:45 by nkamolba          #+#    #+#              #
-#    Updated: 2018/10/20 22:37:40 by nattapol         ###   ########.fr        #
+#    Updated: 2018/10/21 19:26:06 by nattapol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ FLAG = -Wall -Wextra -Werror
 LIB = -Llibft -lft
 LIBFT = libft/libft.a
 
-FILE = main.c binary_tree.c processing.c
+FILE = main.c binary_tree.c parse.c process.c
 
 FILE_O = $(FILE:%.c=%.o)
 
