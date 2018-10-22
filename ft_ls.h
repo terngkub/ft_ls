@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nattapol <nattapol@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 20:35:55 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/10/21 23:03:09 by nattapol         ###   ########.fr       */
+/*   Updated: 2018/10/22 20:06:33 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <sys/stat.h>
 # include <time.h>
 # include <unistd.h>
+# include <pwd.h>
+# include <grp.h>
 
 /*
 ** Binary Tree

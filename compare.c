@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   compare.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nattapol <nattapol@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 23:01:13 by nattapol          #+#    #+#             */
-/*   Updated: 2018/10/21 23:21:57 by nattapol         ###   ########.fr       */
+/*   Updated: 2018/10/22 19:51:34 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,12 @@ for time and size if the value is the same, sort by name?
 I'm quite sure it work like this for size
 */
 
-static int compare_name(t_)
+/*
+int     compare_time()
 {
-	while (*s1 && *s1 == *s2)
-	{
-		s1++;
-		s2++;
-	}
-	return ((unsigned char)*s1 - (unsigned char)*s2);
-}
 
-static int compare_time()
-{
 }
-
-static int compare_size()
-{
-}
+*/
 
 int     btree_file_strcmp(void * a, void *b)
 {
@@ -52,13 +41,15 @@ int     btree_file_strcmp(void * a, void *b)
 
     data_a = (t_file_data *)a;
     data_b = (t_file_data *)b;
-    if (option->t)
-        return compare_time();
-    else if (option->)
-
+    return ft_strcmp(data_a->file_name, data_b->file_name);
 }
 
 int     btree_dir_strcmp(void * a, void *b)
 {
-    return ft_strcmp(((t_dir_data *)a)->dir_name, ((t_dir_data *)b)->dir_name);
+    t_dir_data  *dir_a;
+    t_dir_data  *dir_b;
+
+    dir_a = (t_dir_data *)a;
+    dir_b = (t_dir_data *)b;
+    return ft_strcmp(dir_a->dir_name, dir_b->dir_name);
 }
