@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nattapol <nattapol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 20:35:55 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/10/22 20:06:33 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/10/24 22:56:23 by nattapol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,14 @@ typedef struct			s_dir_data
 {
 	char				*dir_name;
 	t_btree				*file_tree;
+	t_options			*options;
 }						t_dir_data;
 
 typedef struct	 		s_file_data
 {
 	char				*file_name;
 	struct stat			*stat;
+	t_options			*options;
 }						t_file_data;
 
 void	process_queue(t_ls_data *ls_data);
