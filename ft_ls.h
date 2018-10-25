@@ -6,7 +6,7 @@
 /*   By: nattapol <nattapol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 20:35:55 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/10/24 22:56:23 by nattapol         ###   ########.fr       */
+/*   Updated: 2018/10/25 23:52:05 by nattapol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ typedef	struct			s_ls_data
 {
 	t_options			*options;
 	t_queue				*dir_queue;
-	t_btree				*dir_tree;
 }						t_ls_data;
 
 void        parse_args(t_ls_data *ls_data, int argc, char **argv);
@@ -74,36 +73,30 @@ void        parse_args(t_ls_data *ls_data, int argc, char **argv);
 ** Compare
 */
 
-int     btree_file_strcmp(void * a, void *b);
-int     btree_dir_strcmp(void * a, void *b);
+int     compare_file(void *a, void *b);
 
 /*
 ** Process
 */
 
-typedef struct			s_dir_data
+typedef struct			s_file
 {
-	char				*dir_name;
-	t_btree				*file_tree;
-	t_options			*options;
-}						t_dir_data;
-
-typedef struct	 		s_file_data
-{
-	char				*file_name;
+	char				*name;
+	char				*path;
 	struct stat			*stat;
+	t_btree				*tree;
 	t_options			*options;
-}						t_file_data;
+}						t_file;
 
+void    process_path(t_file *file);
 void	process_queue(t_ls_data *ls_data);
-void	process_path(t_btree **dir_tree, t_options *options, const char *path);
 
 /*
 ** Print
 */
 
-void print_file_tree(void *file_data);
-void print_dir_tree(void *dir_data);
+void print_tree(void *dir_data);
+void print_item(void *file_data);
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: nattapol <nattapol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 17:04:50 by nattapol          #+#    #+#             */
-/*   Updated: 2018/10/24 23:09:28 by nattapol         ###   ########.fr       */
+/*   Updated: 2018/10/26 00:01:36 by nattapol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ if G don't assign group
 
 */
 
-void print_l(t_file_data *data)
+void print_l(t_file *file)
 {
     struct passwd *pwd;
     struct group *gr;
@@ -54,7 +54,7 @@ void print_l(t_file_data *data)
     char *mtime_cut;
 
     //make this another function
-    mode = data->stat->st_mode;
+    mode = file->stat->st_mode;
     ft_printf( (S_ISDIR(mode)) ? "d" : "-");
     ft_printf( (mode & S_IRUSR) ? "r" : "-");
     ft_printf( (mode & S_IWUSR) ? "w" : "-");
@@ -66,58 +66,64 @@ void print_l(t_file_data *data)
     ft_printf( (mode & S_IWOTH) ? "w" : "-");
     ft_printf( (mode & S_IXOTH) ? "x" : "-");
 
-    pwd = getpwuid(data->stat->st_uid);
-    gr = getgrgid(data->stat->st_gid);
-    mtime = ctime(&data->stat->st_mtime);
+    pwd = getpwuid(file->stat->st_uid);
+    gr = getgrgid(file->stat->st_gid);
+    mtime = ctime(&file->stat->st_mtime);
     mtime_cut = ft_strsub(mtime, 4, 15);
-    ft_printf("% d ", data->stat->st_nlink);
-    if (!data->options->g)
+    ft_printf("% d ", file->stat->st_nlink);
+    if (!file->options->g)
         ft_printf("%s ", pwd->pw_name);
-    if (!data->options->G)
+    if (!file->options->G)
         ft_printf("%s ", gr->gr_name);
-    ft_printf("%d %s %s\n", data->stat->st_size, mtime_cut, data->file_name);
+    ft_printf("%d %s %s\n", file->stat->st_size, mtime_cut, file->name);
 }
 
-void handle_Qp(t_file_data *data)
+void handle_Qp(t_file *file)
 {
-    if (data->options->p && S_ISDIR(data->stat->st_mode))
-        ft_strfreecat_back(&(data->file_name), "/");
-    if (data->options->Q)
+    if (file->options->p && S_ISDIR(file->stat->st_mode))
+        ft_strfreecat_back(&(file->name), "/");
+    if (file->options->Q)
     {
-        ft_strfreecat_front(&(data->file_name), "\"");
-        ft_strfreecat_back(&(data->file_name), "\"");
+        ft_strfreecat_front(&(file->name), "\"");
+        ft_strfreecat_back(&(file->name), "\"");
     }
 }
 
-void print_one(t_file_data *data)
+void print_one(t_file *file)
 {
-    ft_printf("%s\n", data->file_name);
+    ft_printf("%s\n", file->name);
 }
 
-// still need to handle column
-void print_normal(t_file_data *data)
+void print_normal(t_file *file)
 {
-    ft_printf("%s  ", data->file_name);
+    ft_printf("%s  ", file->name);
 }
 
-void print_file_tree(void *file_data)
+void print_item(void *file_data)
 {
-    t_file_data   *data;
+    t_file   *file;
 
-    data = (t_file_data *)file_data;
-    handle_Qp(file_data);
-    if (data->options->l || data->options->g)
-        print_l(data);
-    else if (data->options->one)
-        print_one(data);
+    file = (t_file *)file_data;
+    handle_Qp(file);
+    if (file->options->l || file->options->g)
+        print_l(file);
+    else if (file->options->one)
+        print_one(file);
     else
-        print_normal(data);
+        print_normal(file);
 }
 
-void print_dir_tree(void *dir_data)
+void print_tree(void *file_data)
 {
-    ft_printf("%s\n", ((t_dir_data *)dir_data)->dir_name);
-    btree_apply_infix(((t_dir_data *)dir_data)->file_tree, print_file_tree);
-    ft_putchar('\n');
-    ft_putchar('\n');
+    t_file *file;
+
+    file = (t_file *)file_data;
+    if (S_ISDIR(file->stat->st_mode)) {
+        ft_printf("%s:\n", file->path);
+        btree_apply_infix(file->tree, print_item);
+        if (file->tree)
+            ft_printf("\n");
+        ft_printf("\n");
+        btree_apply_infix(file->tree, print_tree);
+    }
 }

@@ -6,7 +6,7 @@
 /*   By: nattapol <nattapol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 14:04:47 by nattapol          #+#    #+#             */
-/*   Updated: 2018/10/21 21:31:59 by nattapol         ###   ########.fr       */
+/*   Updated: 2018/10/25 21:15:53 by nattapol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void parse_flag(t_options *options, char *flag)
         (*flag == 'A') ? options->A = 1 : 0;
         (*flag == 'l') ? options->l = 1 : 0;
         (*flag == 't') ? options->t = 1 : 0;
-        (*flag == 's') ? options->S = 1 : 0;
+        (*flag == 'S') ? options->S = 1 : 0;
         (*flag == 'r') ? options->r = 1 : 0;
         (*flag == '1') ? options->one = 1 : 0;
         (*flag == 'Q') ? options->Q = 1 : 0;
