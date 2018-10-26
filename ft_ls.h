@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nattapol <nattapol@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 20:35:55 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/10/25 23:52:05 by nattapol         ###   ########.fr       */
+/*   Updated: 2018/10/26 21:00:58 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "libft/libft.h"
 # include <dirent.h>
 # include <stdlib.h>
+# include <sys/xattr.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <time.h>

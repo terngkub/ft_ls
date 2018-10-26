@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nattapol <nattapol@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 17:04:50 by nattapol          #+#    #+#             */
-/*   Updated: 2018/10/26 00:01:36 by nattapol         ###   ########.fr       */
+/*   Updated: 2018/10/26 21:01:11 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,31 +45,69 @@ if G don't assign group
 
 */
 
+char get_entry_type(mode_t mode)
+{
+    if (S_IFIFO & mode)
+        return 'p';
+    else if (S_IFCHR & mode)
+        return 'c';
+    else if (S_IFDIR & mode)
+        return 'd';
+    else if (S_IFBLK & mode)
+        return 'b';
+    else if (S_IFREG & mode)
+        return '-';
+    else if (S_IFLNK & mode)
+        return 'l';
+    else if (S_IFSOCK & mode)
+        return 's';
+    return '-';
+}
+
+void    print_file_mode(mode_t mode)
+{
+    char    mode_str[11];
+
+    mode_str[0] = get_entry_type(mode);
+    mode_str[1] = (mode & S_IRUSR) ? 'r' : '-';
+    mode_str[2] = (mode & S_IWUSR) ? 'w' : '-';
+    mode_str[3] = (mode & S_IXUSR) ? 'x' : '-';
+    mode_str[4] = (mode & S_IRGRP) ? 'r' : '-';
+    mode_str[5] = (mode & S_IWGRP) ? 'w' : '-';
+    mode_str[6] = (mode & S_IXGRP) ? 'x' : '-';
+    mode_str[7] = (mode & S_IROTH) ? 'r' : '-';
+    mode_str[8] = (mode & S_IWOTH) ? 'w' : '-';
+    mode_str[9] = (mode & S_IXOTH) ? 'x' : '-';
+    mode_str[10] = '\0';
+    ft_putstr(mode_str);
+}
+
+void    print_attr(t_file *file)
+{
+    ssize_t xattr;
+
+    xattr = listxattr(file->name, NULL, 0, XATTR_NOFOLLOW);
+    if (xattr < 0)
+        xattr = 0;
+    if (xattr > 0)
+        ft_putchar('@');
+    else
+        ft_putchar(' ');
+}
+
 void print_l(t_file *file)
 {
     struct passwd *pwd;
     struct group *gr;
-    mode_t mode;
     char *mtime;
     char *mtime_cut;
 
-    //make this another function
-    mode = file->stat->st_mode;
-    ft_printf( (S_ISDIR(mode)) ? "d" : "-");
-    ft_printf( (mode & S_IRUSR) ? "r" : "-");
-    ft_printf( (mode & S_IWUSR) ? "w" : "-");
-    ft_printf( (mode & S_IXUSR) ? "x" : "-");
-    ft_printf( (mode & S_IRGRP) ? "r" : "-");
-    ft_printf( (mode & S_IWGRP) ? "w" : "-");
-    ft_printf( (mode & S_IXGRP) ? "x" : "-");
-    ft_printf( (mode & S_IROTH) ? "r" : "-");
-    ft_printf( (mode & S_IWOTH) ? "w" : "-");
-    ft_printf( (mode & S_IXOTH) ? "x" : "-");
-
+    print_file_mode(file->stat->st_mode);
+    print_attr(file);
     pwd = getpwuid(file->stat->st_uid);
     gr = getgrgid(file->stat->st_gid);
     mtime = ctime(&file->stat->st_mtime);
-    mtime_cut = ft_strsub(mtime, 4, 15);
+    mtime_cut = ft_strsub(mtime, 4, 12);
     ft_printf("% d ", file->stat->st_nlink);
     if (!file->options->g)
         ft_printf("%s ", pwd->pw_name);
