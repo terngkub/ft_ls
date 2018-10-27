@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 20:35:55 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/10/26 21:00:58 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/10/27 22:16:14 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "libft/libft.h"
 # include <dirent.h>
 # include <stdlib.h>
+# include <sys/acl.h>
 # include <sys/xattr.h>
 # include <sys/types.h>
 # include <sys/stat.h>
@@ -80,13 +81,25 @@ int     compare_file(void *a, void *b);
 ** Process
 */
 
+typedef struct			s_ls_max
+{
+	size_t				files;
+	size_t				user;
+	size_t				group;
+	size_t				size;
+	size_t				name;
+}						t_ls_max;
+
 typedef struct			s_file
 {
 	char				*name;
 	char				*path;
 	struct stat			*stat;
+	struct stat			*lstat;
 	t_btree				*tree;
 	t_options			*options;
+	t_ls_max			*parent_max;
+	t_ls_max			*children_max;
 }						t_file;
 
 void    process_path(t_file *file);

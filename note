@@ -9,8 +9,8 @@ Plan
 - implement prototype of binary tree >>> ok
 - list all the behaviors of program >>> ok
 - design program structure >>> ok
-- implement ls -R
-- implement parser
+- implement ls -R >>> ok
+- implement parser >>> ok
 - implement printer
 - handle memory leak
 - handle error
@@ -58,3 +58,12 @@ for optimization: if doesn't have above flag, don't run stat()
     p = add / to directory
     g = no owner
     G = no group
+
+todo
+- edit flag difference between Ubuntu to Mac
+- finish -l
+    - +@ sign >>> ok
+    - spacing
+    - time change to year when more than 6 monhs
+    - link
+- fix printing

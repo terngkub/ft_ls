@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 17:04:50 by nattapol          #+#    #+#             */
-/*   Updated: 2018/10/26 21:01:11 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/10/27 23:08:24 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@ G = no group (only work with l or g)
 */
 
 /*
-use stuct
-and print just once
-
 type&permission
 number of file inside
 name
@@ -37,12 +34,6 @@ opened quote
 name
 slash
 closed quote
-
-init with empty string
-if l assign to all
-if g don't assign owner
-if G don't assign group
-
 */
 
 char get_entry_type(mode_t mode)
@@ -82,38 +73,99 @@ void    print_file_mode(mode_t mode)
     ft_putstr(mode_str);
 }
 
-void    print_attr(t_file *file)
+void    print_acl_xattr(t_file *file)
 {
+    acl_t   acl;
     ssize_t xattr;
 
-    xattr = listxattr(file->name, NULL, 0, XATTR_NOFOLLOW);
-    if (xattr < 0)
-        xattr = 0;
-    if (xattr > 0)
+    acl = acl_get_link_np(file->path, ACL_TYPE_EXTENDED);
+    xattr = listxattr(file->path, NULL, 0, XATTR_NOFOLLOW);
+    if (acl != NULL)
+    {
+        acl_free(acl);
+        ft_putchar('+');
+    }
+    else if (xattr > 0)
         ft_putchar('@');
     else
         ft_putchar(' ');
+}
+
+void print_space(len)
+{
+    while (len--)
+        ft_putchar(' ');
+}
+
+/*
+void print_time(t_file *file)
+{
+
+}
+*/
+
+void print_name(t_file *file)
+{
+    size_t size;
+    char *buff;
+    ft_putstr(file->name);
+    
+    if (S_ISLNK(file->lstat->st_mode))
+    {
+        size = file->lstat->st_size;
+        buff = (char *)malloc(size + 1);
+        readlink(file->path, buff, size);
+        ft_printf(" -> %s", buff);
+    }
+    
+    // print name
+    // if symbolic link print link
+    // Qp
+}
+
+void print_time(t_file *file)
+{
+    char *mtime;
+    char    *date_str;
+    char    *time_str;
+    char    *year_str;
+
+
+    mtime = ctime(&file->lstat->st_mtime);
+    date_str = ft_strsub(mtime, 4, 7);
+    time_str = ft_strsub(mtime, 11, 5);
+    year_str = ft_strsub(mtime, 20, 4);
+    ft_putstr(date_str);
+    if (time(NULL) - file->lstat->st_mtime < 15552000)
+        ft_putstr(time_str);
+    else
+        ft_putstr(year_str);
 }
 
 void print_l(t_file *file)
 {
     struct passwd *pwd;
     struct group *gr;
-    char *mtime;
-    char *mtime_cut;
 
-    print_file_mode(file->stat->st_mode);
-    print_attr(file);
     pwd = getpwuid(file->stat->st_uid);
     gr = getgrgid(file->stat->st_gid);
-    mtime = ctime(&file->stat->st_mtime);
-    mtime_cut = ft_strsub(mtime, 4, 12);
-    ft_printf("% d ", file->stat->st_nlink);
-    if (!file->options->g)
-        ft_printf("%s ", pwd->pw_name);
-    if (!file->options->G)
-        ft_printf("%s ", gr->gr_name);
-    ft_printf("%d %s %s\n", file->stat->st_size, mtime_cut, file->name);
+
+    print_file_mode(file->lstat->st_mode);
+    print_acl_xattr(file);
+    print_space(file->parent_max->files - ft_numlen(file->lstat->st_nlink) + 1);
+    ft_putnbr(file->lstat->st_nlink);
+    print_space(file->parent_max->user - ft_strlen(pwd->pw_name) + 1);
+    ft_putstr(pwd->pw_name);
+    print_space(file->parent_max->group - ft_strlen(gr->gr_name) + 2);
+    ft_putstr(gr->gr_name);
+    print_space(file->parent_max->size - ft_numlen(file->lstat->st_size) + 2);
+    ft_putnbr(file->lstat->st_size);
+    ft_putchar(' ');
+    print_time(file);
+    ft_putchar(' ');
+    print_name(file);
+    ft_putchar('\n');
+
 }
 
 void handle_Qp(t_file *file)
@@ -127,14 +179,9 @@ void handle_Qp(t_file *file)
     }
 }
 
-void print_one(t_file *file)
-{
-    ft_printf("%s\n", file->name);
-}
-
 void print_normal(t_file *file)
 {
-    ft_printf("%s  ", file->name);
+    ft_printf("%s\n", file->name);
 }
 
 void print_item(void *file_data)
@@ -145,8 +192,6 @@ void print_item(void *file_data)
     handle_Qp(file);
     if (file->options->l || file->options->g)
         print_l(file);
-    else if (file->options->one)
-        print_one(file);
     else
         print_normal(file);
 }
@@ -162,6 +207,7 @@ void print_tree(void *file_data)
         if (file->tree)
             ft_printf("\n");
         ft_printf("\n");
-        btree_apply_infix(file->tree, print_tree);
+        if (file->options->R)
+            btree_apply_infix(file->tree, print_tree);
     }
 }
