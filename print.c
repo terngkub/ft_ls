@@ -6,51 +6,27 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 17:04:50 by nattapol          #+#    #+#             */
-/*   Updated: 2018/10/27 23:08:24 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/10/28 19:19:10 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-/*
-l = one file per line
-1 = one file per line (addition)
-Q = add double quote to filename (addition)
-p = add / to directory (addition)
-g = no owner (enforece l)
-G = no group (only work with l or g)
-*/
-
-/*
-type&permission
-number of file inside
-name
-group
-size
-month
-day
-time
-opened quote
-name
-slash
-closed quote
-*/
-
 char get_entry_type(mode_t mode)
 {
-    if (S_IFIFO & mode)
-        return 'p';
-    else if (S_IFCHR & mode)
-        return 'c';
-    else if (S_IFDIR & mode)
-        return 'd';
-    else if (S_IFBLK & mode)
-        return 'b';
-    else if (S_IFREG & mode)
+    if (S_ISREG(mode))
         return '-';
-    else if (S_IFLNK & mode)
+    else if (S_ISDIR(mode))
+        return 'd';
+    else if (S_ISLNK(mode))
         return 'l';
-    else if (S_IFSOCK & mode)
+    else if (S_ISBLK(mode))
+        return 'b';
+    else if (S_ISCHR(mode))
+        return 'c';
+    else if (S_ISFIFO(mode))
+        return 'p';
+    else if (S_ISSOCK(mode))
         return 's';
     return '-';
 }
@@ -97,13 +73,6 @@ void print_space(len)
         ft_putchar(' ');
 }
 
-/*
-void print_time(t_file *file)
-{
-
-}
-*/
-
 void print_name(t_file *file)
 {
     size_t size;
@@ -114,13 +83,10 @@ void print_name(t_file *file)
     {
         size = file->lstat->st_size;
         buff = (char *)malloc(size + 1);
+        buff[size] = '\0';
         readlink(file->path, buff, size);
         ft_printf(" -> %s", buff);
     }
-    
-    // print name
-    // if symbolic link print link
-    // Qp
 }
 
 void print_time(t_file *file)
@@ -130,11 +96,10 @@ void print_time(t_file *file)
     char    *time_str;
     char    *year_str;
 
-
     mtime = ctime(&file->lstat->st_mtime);
     date_str = ft_strsub(mtime, 4, 7);
     time_str = ft_strsub(mtime, 11, 5);
-    year_str = ft_strsub(mtime, 20, 4);
+    year_str = ft_strsub(mtime, 19, 5);
     ft_putstr(date_str);
     if (time(NULL) - file->lstat->st_mtime < 15552000)
         ft_putstr(time_str);
@@ -165,7 +130,6 @@ void print_l(t_file *file)
     ft_putchar(' ');
     print_name(file);
     ft_putchar('\n');
-
 }
 
 void handle_Qp(t_file *file)
@@ -202,12 +166,8 @@ void print_tree(void *file_data)
 
     file = (t_file *)file_data;
     if (S_ISDIR(file->stat->st_mode)) {
-        ft_printf("%s:\n", file->path);
+        if (file->options->l)
+            ft_printf("total %d\n", file->children_max->blocks);
         btree_apply_infix(file->tree, print_item);
-        if (file->tree)
-            ft_printf("\n");
-        ft_printf("\n");
-        if (file->options->R)
-            btree_apply_infix(file->tree, print_tree);
     }
 }

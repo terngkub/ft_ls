@@ -6,7 +6,7 @@
 #    By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/15 19:35:45 by nkamolba          #+#    #+#              #
-#    Updated: 2018/10/22 19:32:18 by nkamolba         ###   ########.fr        #
+#    Updated: 2018/10/28 14:49:02 by nkamolba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ clean:
 	@rm -f $(FILE_O)
 	@echo "$(NAME) clean done"
 
-fclean:
+fclean: clean
 	@rm -f $(LIBFT)
 	@echo "libft.a fclean done"
 	@rm -f $(NAME)

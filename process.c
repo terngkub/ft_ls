@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 19:47:59 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/10/27 22:48:44 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/10/28 18:11:50 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void    get_max(t_file *file)
     name_len = ft_strlen(file->name);
     if (name_len > file->parent_max->name)
         file->parent_max->name = name_len;
+    file->parent_max->blocks += file->lstat->st_blocks;
 }
 
 t_file    *init_file(char *name, char *path, t_options *options, t_ls_max *max)
@@ -94,8 +95,11 @@ t_file    *init_file(char *name, char *path, t_options *options, t_ls_max *max)
     return (file);
 }
 
-void     handle_option_R(t_file *file)
+void     handle_option_R(void *file_data)
 {
+    t_file  *file;
+
+    file = (t_file *)file_data;
     if (file->options->R == 1
             && ft_strcmp(file->name, ".") != 0
             && ft_strcmp(file->name, "..") != 0
@@ -111,43 +115,54 @@ int    check_options(char *name, t_options *options)
     return 1;
 }
 
-
-void    process_path(t_file *file)
+void    process_dir(t_file *file)
 {
     DIR             *dir;
     struct dirent   *dirent;
     t_file          *new_file;
+    char            *err;
 
-    dir = opendir(file->path);
+    if ((dir = opendir(file->path)) == NULL) {
+        if (!(err = ft_strjoin("ft_ls: ", file->path)))
+            exit(EXIT_FAILURE);
+        perror(err);
+        return ;
+    }
     while ((dirent = readdir(dir)))
     {
         if (check_options(dirent->d_name, file->options))
         {
             new_file = init_file(dirent->d_name, file->path, file->options, file->children_max);
             btree_insert(&(file->tree), new_file, compare_file);
-            handle_option_R(new_file);
         }
     }
     closedir(dir);
 }
 
+void    process_path(t_file *file)
+{
+    if (file->parent_max)
+        ft_printf("\n%s:\n", file->path);
+    process_dir(file);
+    print_tree(file);
+    btree_apply_infix(file->tree, handle_option_R);
+}
+
 void    process_queue(t_ls_data *ls_data)
 {
     t_file  *file;
-    char *name;
+    char **name;
 
     if (ls_data->dir_queue->size == 0)
     {
         file = init_file(".", "", ls_data->options, NULL);
         process_path(file);
-        print_tree(file);
         return ;
     }
     while (ls_data->dir_queue->size)
     {
-        name = ft_queue_dequeue(ls_data->dir_queue);
-        file = init_file(name, "", ls_data->options, NULL);
+        name = (char **)ft_queue_dequeue(ls_data->dir_queue);
+        file = init_file(*name, "", ls_data->options, NULL);
         process_path(file);
-        print_tree(file);
     }
 }

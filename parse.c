@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nattapol <nattapol@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 14:04:47 by nattapol          #+#    #+#             */
-/*   Updated: 2018/10/25 21:15:53 by nattapol         ###   ########.fr       */
+/*   Updated: 2018/10/28 19:29:11 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,12 @@ static void parse_flag(t_options *options, char *flag)
     while (*flag)
     {
         if (ft_strchr("RaAdltSr1QpgG", *flag) == NULL)
-            exit(1);
+        {
+            ft_putstr_fd("ft_ls: illegal option -- ", 2);
+            ft_putchar_fd(*flag, 2);
+            ft_putstr_fd("\nusage: ft_ls [RaAdltSr1QpgG] [file ...]\n", 2);
+            exit(EXIT_FAILURE);
+        }
         (*flag == 'R') ? options->R = 1 : 0;
         (*flag == 'a') ? options->a = 1 : 0;
         (*flag == 'A') ? options->A = 1 : 0;
@@ -45,7 +50,8 @@ void        parse_args(t_ls_data *ls_data, int argc, char **argv)
         if (argv[i][0] == '-')
             parse_flag(ls_data->options, argv[i]);
         else
-            ft_queue_enqueue(ls_data->dir_queue, (void const *)argv[i]);
+            ft_queue_enqueue(ls_data->dir_queue, &argv[i]);
+            //need error handling
         ++i;
     }
 }

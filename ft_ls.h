@@ -6,21 +6,23 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 20:35:55 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/10/27 22:16:14 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/10/28 18:08:41 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_LS_H
 # define FT_LS_H
 
-# include <stdio.h>
 # include "libft/libft.h"
+# include <errno.h>
+# include <stdio.h>
 # include <dirent.h>
 # include <stdlib.h>
 # include <sys/acl.h>
 # include <sys/xattr.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <string.h>
 # include <time.h>
 # include <unistd.h>
 # include <pwd.h>
@@ -83,6 +85,7 @@ int     compare_file(void *a, void *b);
 
 typedef struct			s_ls_max
 {
+	size_t				blocks;
 	size_t				files;
 	size_t				user;
 	size_t				group;

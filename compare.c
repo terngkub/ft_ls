@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 23:01:13 by nattapol          #+#    #+#             */
-/*   Updated: 2018/10/27 22:33:06 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/10/28 19:18:21 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,9 @@ S = size (unique)
 
 int     compare_time(t_file *file_a, t_file *file_b)
 {
-    long int sec_a;
-    long int sec_b;
-    long int nsec_a;
-    long int nsec_b;
-
-    sec_a = file_a->stat->st_mtime;
-    sec_b = file_b->stat->st_mtime;
-    nsec_a = file_a->stat->st_mtime;
-    nsec_b = file_b->stat->st_mtime;
-    if (sec_a == sec_b)
-    {
-        if (nsec_a == nsec_b)
-            return ft_strcmp(file_a->name, file_b->name);
-        return ((nsec_a > nsec_b) ? 1 : -1);
-    }
-    return ((sec_a > sec_b) ? 1 : -1);
+    if (file_a->stat->st_mtime == file_b->stat->st_mtime)
+        return ft_strcmp(file_a->name, file_b->name);
+    return ((file_a->stat->st_mtime > file_b->stat->st_mtime) ? -1 : 1);
 }
 
 int compare_size(t_file *file_a, t_file *file_b)

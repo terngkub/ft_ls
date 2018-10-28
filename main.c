@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nattapol <nattapol@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 19:33:02 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/10/25 22:28:04 by nattapol         ###   ########.fr       */
+/*   Updated: 2018/10/28 15:20:06 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void    init_ls_data(t_ls_data *ls_data)
 {
     if (!(ls_data->options = (t_options *)malloc(sizeof(t_options))))
-        exit(1);
+        exit(EXIT_FAILURE);
     if (!(ls_data->dir_queue = ft_queue_create(sizeof(char *))))
-        exit(1);
+        exit(EXIT_FAILURE);
 }
 
 int main(int argc, char **argv)
