@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 14:04:47 by nattapol          #+#    #+#             */
-/*   Updated: 2018/11/11 17:36:58 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/11 18:04:03 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ void        parse_args(t_ls_data *ls_data, int argc, char **argv)
     while (i < argc)
     {
         if (argv[i][0] == '-')
+        {
             ft_printf("ft_ls: %s: No such file or directory\n", argv[i++]);
+            ls_data->printed = 1;
+        }
         else
             ft_queue_enqueue(ls_data->dir_queue, &argv[i++]);
             //need error handling

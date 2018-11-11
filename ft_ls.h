@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 20:35:55 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/11/11 17:19:24 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/11 18:08:17 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef	struct			s_ls_data
 {
 	t_options			*options;
 	t_queue				*dir_queue;
+	int					flag_error;
 }						t_ls_data;
 
 void        parse_args(t_ls_data *ls_data, int argc, char **argv);

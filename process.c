@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 19:47:59 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/11/11 17:32:36 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/11 18:10:12 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void    process_queue(t_ls_data *ls_data)
 {
     t_ls_file  *file;
     char **name;
+    size_t queue_size;
+    int first;
 
     if (ls_data->dir_queue->size == 0)
     {
@@ -76,10 +78,19 @@ void    process_queue(t_ls_data *ls_data)
         process_path(file);
         return ;
     }
+    queue_size = ls_data->dir_queue->size;
+    first = 1;
     while (ls_data->dir_queue->size)
     {
         name = (char **)ft_queue_dequeue(ls_data->dir_queue);
         file = init_file(*name, "", ls_data->options, NULL);
+        if (queue_size > 1 || ls_data->flag_error)
+        {
+            if (!first)
+                ft_putchar('\n');
+            ft_printf("%s:\n", *name);
+            first = 0;
+        }
         process_path(file);
     }
 }
