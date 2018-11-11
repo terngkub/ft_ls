@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nkamolba <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/08 09:11:21 by nkamolba          #+#    #+#              #
-#    Updated: 2017/12/25 17:48:39 by nkamolba         ###   ########.fr        #
+#    Updated: 2018/11/11 19:51:40 by nkamolba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ FILE =	ft_memset ft_bzero ft_memcpy ft_memccpy ft_memmove ft_memchr ft_memcmp\
 		ft_putchar_fd ft_putstr_fd ft_putendl_fd ft_putnbr_fd\
 		ft_countword ft_wordlen ft_getword ft_skipc ft_skiptoc\
 		ft_numlen ft_power ft_itoa_base ft_strfreecat_back ft_strfreecat_front\
-		ft_putstr_len ft_strfncat_back ft_strfncat_front\
+		ft_putstr_len ft_putstr_fd_len ft_strfncat_back ft_strfncat_front\
 		ft_lstnew ft_lstdelone ft_lstdel ft_lstadd ft_lstiter ft_lstmap\
 		ft_lstpushback ft_lstprint ft_lstsearch ft_lstrev\
 		ft_stack_create ft_stack_push ft_stack_pop\
@@ -35,7 +35,8 @@ FILE =	ft_memset ft_bzero ft_memcpy ft_memccpy ft_memmove ft_memchr ft_memcmp\
 		
 FILE_O = $(addsuffix .o, $(FILE))
 
-PNTF =	ft_printf read_input get_conv get_data\
+PNTF =	ft_printf ft_fprintf\
+		read_input get_conv get_data\
 		get_num get_str get_wchar get_ptr\
 		handle_flag handle_wp
 

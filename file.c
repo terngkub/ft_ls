@@ -6,96 +6,98 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:55:51 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/11/11 17:02:02 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/11 21:09:09 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static char    *create_path(char *old_path, char *name)
+static char				*create_path(char *old_path, char *name)
 {
-    size_t  path_len;
-    size_t  name_len;
-    char    *new_path;
-    char    *ret;
-
-    path_len = ft_strlen(old_path);
-    name_len = ft_strlen(name);
-    new_path = (char *)malloc(path_len + 1 + name_len + 1);
-    ret = new_path;
-    while (*old_path)
-        *new_path++ = *old_path++;
-    *new_path++ = '/';
-    while (*name)
-        *new_path++ = *name++;
-    *new_path = '\0';
-    return ret;
-}
-
-static void    get_max(t_ls_file *file)
-{
-    struct passwd *pwd;
-    struct group *gr;
-	size_t				files_len;
-	size_t				user_len;
-	size_t				group_len;
-	size_t				size_len;
+	size_t				path_len;
 	size_t				name_len;
+	char				*new_path;
+	char				*ret;
 
-    files_len = ft_numlen(file->lstat->st_nlink);
-    if (files_len > file->parent_data->files)
-        file->parent_data->files = files_len;
-    pwd = getpwuid(file->lstat->st_uid);
-    user_len = ft_strlen(pwd->pw_name);
-    if (user_len > file->parent_data->user)
-        file->parent_data->user = user_len;
-    gr = getgrgid(file->lstat->st_gid);
-    group_len = ft_strlen(gr->gr_name);
-    if (group_len > file->parent_data->group)
-        file->parent_data->group = group_len;
-    size_len = ft_numlen(file->lstat->st_size);
-    if (size_len > file->parent_data->size)
-        file->parent_data->size = size_len;
-    name_len = ft_strlen(file->name);
-    if (name_len > file->parent_data->name)
-        file->parent_data->name = name_len;
-    file->parent_data->blocks += file->lstat->st_blocks;
+	path_len = ft_strlen(old_path);
+	name_len = ft_strlen(name);
+	if (!(new_path = (char *)malloc(path_len + 1 + name_len + 1)))
+		ft_error("Error: malloc failed.");
+	ret = new_path;
+	while (*old_path)
+		*new_path++ = *old_path++;
+	*new_path++ = '/';
+	while (*name)
+		*new_path++ = *name++;
+	*new_path = '\0';
+	return (ret);
 }
 
-static t_ls_filedata	*init_filedata()
+static void				get_max(t_ls_file *file)
 {
-	t_ls_filedata *filedata;
-	filedata = (t_ls_filedata *)malloc(sizeof(t_ls_filedata));
-	filedata->files = 0;
-	filedata->user = 0;
-	filedata->group = 0;
-	filedata->size = 0;
-	filedata->name = 0;
-	return filedata;
+	struct passwd		*pwd;
+	struct group		*gr;
+	size_t				len;
+
+	len = ft_numlen(file->lstat->st_nlink);
+	if (len > file->parent_data->files_len)
+		file->parent_data->files_len = len;
+	pwd = getpwuid(file->lstat->st_uid);
+	len = ft_strlen(pwd->pw_name);
+	if (len > file->parent_data->user_len)
+		file->parent_data->user_len = len;
+	gr = getgrgid(file->lstat->st_gid);
+	len = ft_strlen(gr->gr_name);
+	if (len > file->parent_data->group_len)
+		file->parent_data->group_len = len;
+	len = ft_numlen(file->lstat->st_size);
+	if (len > file->parent_data->size_len)
+		file->parent_data->size_len = len;
+	len = ft_strlen(file->name);
+	if (len > file->parent_data->name_len)
+		file->parent_data->name_len = len;
+	file->parent_data->blocks += file->lstat->st_blocks;
 }
 
-t_ls_file    *init_file(char *name, char *path, t_options *options, t_ls_filedata *max)
+static t_ls_filedata	*init_filedata(void)
 {
-    t_ls_file *file;
+	t_ls_filedata		*filedata;
 
-    file = (t_ls_file *)malloc(sizeof(t_ls_file));
-    file->name = ft_strdup(name);
-    if (!*path)
-        file->path = ft_strdup(name);
-    else
-        file->path = create_path(path, name);
-    file->stat = (struct stat *)malloc(sizeof(struct stat));
-    stat(file->path, file->stat);
-    file->lstat = (struct stat *)malloc(sizeof(struct stat));
-    lstat(file->path, file->lstat);
-    file->tree = NULL;
-    file->options = options;
-    file->parent_data = max;
-    if (max != NULL)
-        get_max(file);
-    if (S_ISDIR(file->stat->st_mode))
-		file->children_data = init_filedata();
-    else
-        file->children_data = NULL;
-    return (file);
+	if (!(filedata = (t_ls_filedata *)malloc(sizeof(t_ls_filedata))))
+		ft_error("Error: malloc failed");
+	filedata->files_len = 0;
+	filedata->user_len = 0;
+	filedata->group_len = 0;
+	filedata->size_len = 0;
+	filedata->name_len = 0;
+	return (filedata);
+}
+
+t_ls_file				*init_file(char *name, char *path, t_options *options,
+							t_ls_filedata *filedata)
+{
+	t_ls_file			*file;
+
+	if (!(file = (t_ls_file *)malloc(sizeof(t_ls_file))))
+		ft_error("Error: malloc failed");
+	if (!(file->name = ft_strdup(name)))
+		ft_error("Error: ft_strdup failed");
+	if (!*path)
+		file->path = ft_strdup(name);
+	else
+		file->path = create_path(path, name);
+	if (!(file->stat = (struct stat *)malloc(sizeof(struct stat))))
+		ft_error("Error: malloc failed");
+	stat(file->path, file->stat);
+	if (!(file->lstat = (struct stat *)malloc(sizeof(struct stat))))
+		ft_error("Error: malloc failed");
+	lstat(file->path, file->lstat);
+	file->tree = NULL;
+	file->options = options;
+	file->parent_data = filedata;
+	if (filedata != NULL)
+		get_max(file);
+	file->children_data = (S_ISDIR(file->stat->st_mode))
+		? init_filedata() : NULL;
+	return (file);
 }

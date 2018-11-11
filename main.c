@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 19:33:02 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/11/11 18:03:15 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/11 19:31:53 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void    init_ls_data(t_ls_data *ls_data)
         exit(EXIT_FAILURE);
     if (!(ls_data->dir_queue = ft_queue_create(sizeof(t_ls_file *))))
         exit(EXIT_FAILURE);
-    ls_data->printed = 0;
+    ls_data->flag_error = 0;
 }
 
 int main(int argc, char **argv)

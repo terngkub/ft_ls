@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 19:47:59 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/11/11 18:10:12 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/11 20:50:24 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void     handle_option_R(void *file_data)
 
 int    check_options(char *name, t_options *options)
 {
-    if (((ft_strcmp(name, ".") == 0 || ft_strcmp(name, "..") == 0) && !options->a)
+    if (((ft_strcmp(name, ".") == 0
+            || ft_strcmp(name, "..") == 0) && !options->a)
             || (name[0] == '.' && !(options->a || options->A)))
         return 0;
     return 1;
@@ -41,7 +42,7 @@ void    process_dir(t_ls_file *file)
 
     if ((dir = opendir(file->path)) == NULL) {
         if (!(err = ft_strjoin("ft_ls: ", file->path)))
-            exit(EXIT_FAILURE);
+            ft_error("Error: ft_strjoin failed\n");
         perror(err);
         return ;
     }
@@ -49,7 +50,8 @@ void    process_dir(t_ls_file *file)
     {
         if (check_options(dirent->d_name, file->options))
         {
-            new_file = init_file(dirent->d_name, file->path, file->options, file->children_data);
+            new_file = init_file(dirent->d_name, file->path,
+                    file->options, file->children_data);
             btree_insert(&(file->tree), new_file, compare_file);
         }
     }
@@ -70,7 +72,6 @@ void    process_queue(t_ls_data *ls_data)
     t_ls_file  *file;
     char **name;
     size_t queue_size;
-    int first;
 
     if (ls_data->dir_queue->size == 0)
     {
@@ -79,18 +80,16 @@ void    process_queue(t_ls_data *ls_data)
         return ;
     }
     queue_size = ls_data->dir_queue->size;
-    first = 1;
     while (ls_data->dir_queue->size)
     {
         name = (char **)ft_queue_dequeue(ls_data->dir_queue);
-        file = init_file(*name, "", ls_data->options, NULL);
         if (queue_size > 1 || ls_data->flag_error)
         {
-            if (!first)
+            if (queue_size - 1 != ls_data->dir_queue->size)
                 ft_putchar('\n');
             ft_printf("%s:\n", *name);
-            first = 0;
         }
+        file = init_file(*name, "", ls_data->options, NULL);
         process_path(file);
     }
 }

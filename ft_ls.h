@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 20:35:55 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/11/11 18:08:17 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/11 21:35:10 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,14 @@ int     compare_file(void *a, void *b);
 ** Process
 */
 
-typedef struct			s_ls_max
+typedef struct			s_ls_filedata
 {
 	size_t				blocks;
-	size_t				files;
-	size_t				user;
-	size_t				group;
-	size_t				size;
-	size_t				name;
+	size_t				files_len;
+	size_t				user_len;
+	size_t				group_len;
+	size_t				size_len;
+	size_t				name_len;
 }						t_ls_filedata;
 
 typedef struct			s_ls_file
@@ -113,9 +113,20 @@ void	process_queue(t_ls_data *ls_data);
 /*
 ** Print
 */
+char        get_entry_type(mode_t mode);
+void    print_ls_file_mode(mode_t mode);
+void    print_acl_xattr(t_ls_file *file);
+void print_space(int len);
+void print_name(t_ls_file *file);
+void print_time(t_ls_file *file);
+void print_l(t_ls_file *file);
 
 void print_tree(void *dir_data);
-void print_item(void *file_data);
 
+/*
+**
+*/
+
+void ft_error(char *str);
 
 #endif

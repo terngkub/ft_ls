@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkamolba <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 09:09:23 by nkamolba          #+#    #+#             */
-/*   Updated: 2017/12/25 17:48:26 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/11 19:52:45 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ char				*ft_strfncat_back(char **str1, char *str2,
 						size_t len1, size_t len2);
 char				*ft_strfncat_front(char **str1, char *str2,
 						size_t len1, size_t len2);
-void				ft_putstr_len(char *str, size_t len);
+void				ft_putstr_len(char const *str, size_t len);
+void				ft_putstr_fd_len(char const *str, int fd, size_t len);
 
 typedef struct		s_list
 {

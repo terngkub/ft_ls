@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkamolba <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/27 17:43:42 by nkamolba          #+#    #+#             */
-/*   Updated: 2017/12/02 23:44:40 by terng            ###   ########.fr       */
+/*   Updated: 2018/11/11 19:48:04 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct	s_printf
 }				t_printf;
 
 int				ft_printf(const char *format, ...);
+int				ft_fprintf(int fd, const char *format, ...);
 
 int				ft_readword(const char **format, char **str, size_t *len);
 void			ft_initconv(t_printf *conv);

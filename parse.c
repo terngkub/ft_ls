@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 14:04:47 by nattapol          #+#    #+#             */
-/*   Updated: 2018/11/11 18:04:03 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/11 20:19:11 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,8 @@ static void parse_flag(t_options *options, char *flag)
     {
         if (ft_strchr("RaAdltSr1QpgG", *flag) == NULL)
         {
-            ft_putstr_fd("ft_ls: illegal option -- ", 2);
-            ft_putchar_fd(*flag, 2);
-            ft_putstr_fd("\nusage: ft_ls [RaAdltSr1QpgG] [file ...]\n", 2);
+            ft_fprintf(2, "ft_ls: illegal option -- %c\n", *flag);
+            ft_fprintf(2, "usage: ft_ls [RaAdltSr1QpgG] [file ...]\n");
             exit(EXIT_FAILURE);
         }
         (*flag == 'R') ? options->R = 1 : 0;
@@ -53,11 +52,10 @@ void        parse_args(t_ls_data *ls_data, int argc, char **argv)
     {
         if (argv[i][0] == '-')
         {
-            ft_printf("ft_ls: %s: No such file or directory\n", argv[i++]);
-            ls_data->printed = 1;
+            ft_fprintf(2, "ft_ls: %s: No such file or directory\n", argv[i++]);
+            ls_data->flag_error = 1;
         }
         else
             ft_queue_enqueue(ls_data->dir_queue, &argv[i++]);
-            //need error handling
     }
 }
