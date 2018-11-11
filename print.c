@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 17:04:50 by nattapol          #+#    #+#             */
-/*   Updated: 2018/10/28 19:19:10 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/11 16:52:35 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char get_entry_type(mode_t mode)
     return '-';
 }
 
-void    print_file_mode(mode_t mode)
+void    print_ls_file_mode(mode_t mode)
 {
     char    mode_str[11];
 
@@ -49,7 +49,7 @@ void    print_file_mode(mode_t mode)
     ft_putstr(mode_str);
 }
 
-void    print_acl_xattr(t_file *file)
+void    print_acl_xattr(t_ls_file *file)
 {
     acl_t   acl;
     ssize_t xattr;
@@ -73,7 +73,7 @@ void print_space(len)
         ft_putchar(' ');
 }
 
-void print_name(t_file *file)
+void print_name(t_ls_file *file)
 {
     size_t size;
     char *buff;
@@ -89,7 +89,7 @@ void print_name(t_file *file)
     }
 }
 
-void print_time(t_file *file)
+void print_time(t_ls_file *file)
 {
     char *mtime;
     char    *date_str;
@@ -107,7 +107,7 @@ void print_time(t_file *file)
         ft_putstr(year_str);
 }
 
-void print_l(t_file *file)
+void print_l(t_ls_file *file)
 {
     struct passwd *pwd;
     struct group *gr;
@@ -115,15 +115,15 @@ void print_l(t_file *file)
     pwd = getpwuid(file->stat->st_uid);
     gr = getgrgid(file->stat->st_gid);
 
-    print_file_mode(file->lstat->st_mode);
+    print_ls_file_mode(file->lstat->st_mode);
     print_acl_xattr(file);
-    print_space(file->parent_max->files - ft_numlen(file->lstat->st_nlink) + 1);
+    print_space(file->parent_data->files - ft_numlen(file->lstat->st_nlink) + 1);
     ft_putnbr(file->lstat->st_nlink);
-    print_space(file->parent_max->user - ft_strlen(pwd->pw_name) + 1);
+    print_space(file->parent_data->user - ft_strlen(pwd->pw_name) + 1);
     ft_putstr(pwd->pw_name);
-    print_space(file->parent_max->group - ft_strlen(gr->gr_name) + 2);
+    print_space(file->parent_data->group - ft_strlen(gr->gr_name) + 2);
     ft_putstr(gr->gr_name);
-    print_space(file->parent_max->size - ft_numlen(file->lstat->st_size) + 2);
+    print_space(file->parent_data->size - ft_numlen(file->lstat->st_size) + 2);
     ft_putnbr(file->lstat->st_size);
     ft_putchar(' ');
     print_time(file);
@@ -132,7 +132,7 @@ void print_l(t_file *file)
     ft_putchar('\n');
 }
 
-void handle_Qp(t_file *file)
+void handle_Qp(t_ls_file *file)
 {
     if (file->options->p && S_ISDIR(file->stat->st_mode))
         ft_strfreecat_back(&(file->name), "/");
@@ -143,16 +143,16 @@ void handle_Qp(t_file *file)
     }
 }
 
-void print_normal(t_file *file)
+void print_normal(t_ls_file *file)
 {
     ft_printf("%s\n", file->name);
 }
 
 void print_item(void *file_data)
 {
-    t_file   *file;
+    t_ls_file   *file;
 
-    file = (t_file *)file_data;
+    file = (t_ls_file *)file_data;
     handle_Qp(file);
     if (file->options->l || file->options->g)
         print_l(file);
@@ -162,12 +162,12 @@ void print_item(void *file_data)
 
 void print_tree(void *file_data)
 {
-    t_file *file;
+    t_ls_file *file;
 
-    file = (t_file *)file_data;
+    file = (t_ls_file *)file_data;
     if (S_ISDIR(file->stat->st_mode)) {
         if (file->options->l)
-            ft_printf("total %d\n", file->children_max->blocks);
+            ft_printf("total %d\n", file->children_data->blocks);
         btree_apply_infix(file->tree, print_item);
     }
 }

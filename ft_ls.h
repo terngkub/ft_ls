@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 20:35:55 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/10/28 18:08:41 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/11 17:19:24 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ typedef struct			s_ls_max
 	size_t				group;
 	size_t				size;
 	size_t				name;
-}						t_ls_max;
+}						t_ls_filedata;
 
-typedef struct			s_file
+typedef struct			s_ls_file
 {
 	char				*name;
 	char				*path;
@@ -101,11 +101,12 @@ typedef struct			s_file
 	struct stat			*lstat;
 	t_btree				*tree;
 	t_options			*options;
-	t_ls_max			*parent_max;
-	t_ls_max			*children_max;
-}						t_file;
+	t_ls_filedata			*parent_data;
+	t_ls_filedata			*children_data;
+}						t_ls_file;
 
-void    process_path(t_file *file);
+t_ls_file    *init_file(char *name, char *path, t_options *options, t_ls_filedata *max);
+void    process_path(t_ls_file *file);
 void	process_queue(t_ls_data *ls_data);
 
 /*

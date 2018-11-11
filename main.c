@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 19:33:02 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/10/28 15:20:06 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/11 17:12:27 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void    init_ls_data(t_ls_data *ls_data)
 {
     if (!(ls_data->options = (t_options *)malloc(sizeof(t_options))))
         exit(EXIT_FAILURE);
-    if (!(ls_data->dir_queue = ft_queue_create(sizeof(char *))))
+    if (!(ls_data->dir_queue = ft_queue_create(sizeof(t_ls_file *))))
         exit(EXIT_FAILURE);
 }
 

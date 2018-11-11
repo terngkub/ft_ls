@@ -6,7 +6,7 @@
 #    By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/15 19:35:45 by nkamolba          #+#    #+#              #
-#    Updated: 2018/10/28 14:49:02 by nkamolba         ###   ########.fr        #
+#    Updated: 2018/11/11 16:57:07 by nkamolba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ FLAG = -Wall -Wextra -Werror
 LIB = -Llibft -lft
 LIBFT = libft/libft.a
 
-FILE = main.c binary_tree.c compare.c parse.c process.c print.c
+FILE = main.c binary_tree.c compare.c parse.c file.c process.c print.c
 
 FILE_O = $(FILE:%.c=%.o)
 

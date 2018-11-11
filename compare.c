@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 23:01:13 by nattapol          #+#    #+#             */
-/*   Updated: 2018/10/28 19:18:21 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/11 16:48:49 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ t = mod time (unique)
 S = size (unique)
 */
 
-int     compare_time(t_file *file_a, t_file *file_b)
+int     compare_time(t_ls_file *file_a, t_ls_file *file_b)
 {
     if (file_a->stat->st_mtime == file_b->stat->st_mtime)
         return ft_strcmp(file_a->name, file_b->name);
     return ((file_a->stat->st_mtime > file_b->stat->st_mtime) ? -1 : 1);
 }
 
-int compare_size(t_file *file_a, t_file *file_b)
+int compare_size(t_ls_file *file_a, t_ls_file *file_b)
 {
     int size_a;
     int size_b;
@@ -41,12 +41,12 @@ int compare_size(t_file *file_a, t_file *file_b)
 
 int     compare_file(void *a, void *b)
 {
-    t_file *file_a;
-    t_file *file_b;
+    t_ls_file *file_a;
+    t_ls_file *file_b;
     int     compare_result;
 
-    file_a = (t_file *)a;
-    file_b = (t_file *)b;
+    file_a = (t_ls_file *)a;
+    file_b = (t_ls_file *)b;
     if (file_a->options->t)
         compare_result = compare_time(file_a, file_b);
     else if (file_a->options->S)
