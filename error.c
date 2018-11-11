@@ -6,13 +6,13 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 20:39:43 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/11/11 20:47:18 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/11 22:36:13 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void ft_error(char *str)
+void	ft_error(char *str)
 {
 	ft_putstr_fd(str, 2);
 	exit(EXIT_FAILURE);

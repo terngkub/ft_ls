@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 20:35:55 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/11/11 21:35:10 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/11 22:09:08 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void print_l(t_ls_file *file);
 void print_tree(void *dir_data);
 
 /*
-**
+** Error
 */
 
 void ft_error(char *str);
