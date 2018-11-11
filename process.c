@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 19:47:59 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/11/11 22:40:08 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/11 23:49:34 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,9 @@ void	process_queue(t_ls_data *ls_data)
 
 	if (ls_data->dir_queue->size == 0)
 	{
-		file = init_file(".", "", ls_data->options, NULL);
+		file = init_file(".", "", &ls_data->options, NULL);
 		process_path(file);
+		free_file(file);
 		return ;
 	}
 	queue_size = ls_data->dir_queue->size;
@@ -90,7 +91,8 @@ void	process_queue(t_ls_data *ls_data)
 				ft_putchar('\n');
 			ft_printf("%s:\n", *name);
 		}
-		file = init_file(*name, "", ls_data->options, NULL);
+		file = init_file(*name, "", &ls_data->options, NULL);
 		process_path(file);
+		free_file(file);
 	}
 }

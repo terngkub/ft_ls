@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 21:28:09 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/11/11 22:24:38 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/11 23:05:09 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,10 @@ static void	print_time(t_ls_file *file)
 		ft_putstr(time_str);
 	else
 		ft_putstr(year_str);
+	free(month_str);
+	free(date_str);
+	free(time_str);
+	free(year_str);
 }
 
 void		print_l(t_ls_file *file)

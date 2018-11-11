@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 14:04:47 by nattapol          #+#    #+#             */
-/*   Updated: 2018/11/11 22:20:05 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/11 22:50:18 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void		parse_args(t_ls_data *ls_data, int argc, char **argv)
 	i = 1;
 	while (i < argc && argv[i][0] == '-')
 	{
-		parse_flag(ls_data->options, argv[i++]);
+		parse_flag(&(ls_data->options), argv[i++]);
 	}
 	while (i < argc)
 	{

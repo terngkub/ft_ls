@@ -6,7 +6,7 @@
 #    By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/15 19:35:45 by nkamolba          #+#    #+#              #
-#    Updated: 2018/11/11 21:34:48 by nkamolba         ###   ########.fr        #
+#    Updated: 2018/11/11 23:49:46 by nkamolba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ FILE = main.c \
 		binary_tree.c compare.c \
 		parse.c file.c process.c \
 		print.c print_mode.c print_l.c \
-		error.c
+		free.c error.c
 
 FILE_O = $(FILE:%.c=%.o)
 

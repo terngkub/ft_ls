@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 20:35:55 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/11/11 22:09:08 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/11 23:49:29 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct			s_options
 
 typedef	struct			s_ls_data
 {
-	t_options			*options;
+	t_options			options;
 	t_queue				*dir_queue;
 	int					flag_error;
 }						t_ls_data;
@@ -116,17 +116,22 @@ void	process_queue(t_ls_data *ls_data);
 char        get_entry_type(mode_t mode);
 void    print_ls_file_mode(mode_t mode);
 void    print_acl_xattr(t_ls_file *file);
-void print_space(int len);
-void print_name(t_ls_file *file);
-void print_time(t_ls_file *file);
 void print_l(t_ls_file *file);
 
 void print_tree(void *dir_data);
+
+/*
+** Free
+*/
+
+void	btree_delete(t_btree *root);
+void	free_file(void *file_var);
 
 /*
 ** Error
 */
 
 void ft_error(char *str);
+
 
 #endif
