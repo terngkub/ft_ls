@@ -6,11 +6,19 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 17:04:50 by nattapol          #+#    #+#             */
-/*   Updated: 2018/11/12 15:25:52 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/12 16:19:39 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+
+void		print_serial_number(t_ls_file *file)
+{
+	if (file->options->i)
+	{
+		ft_printf("%d ", file->lstat->st_ino);
+	}
+}
 
 static void	handle_p(t_ls_file *file)
 {
@@ -27,7 +35,10 @@ static void	print_item(void *file_data)
 	if (file->options->l || file->options->g)
 		print_l(file);
 	else
+	{
+		print_serial_number(file);
 		ft_putendl(file->name);
+	}
 }
 
 void		print_tree(void *file_data)

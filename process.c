@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 19:47:59 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/11/11 23:49:34 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/12 16:39:48 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	handle_option_r(void *file_data)
 	t_ls_file		*file;
 
 	file = (t_ls_file *)file_data;
-	if (file->options->R == 1
+	if (file->options->ur == 1
 			&& ft_strcmp(file->name, ".") != 0
 			&& ft_strcmp(file->name, "..") != 0
 			&& S_ISDIR(file->stat->st_mode))
@@ -28,7 +28,7 @@ int		check_options(char *name, t_options *options)
 {
 	if (((ft_strcmp(name, ".") == 0
 			|| ft_strcmp(name, "..") == 0) && !options->a)
-			|| (name[0] == '.' && !(options->a || options->A)))
+			|| (name[0] == '.' && !(options->a || options->ua)))
 		return (0);
 	return (1);
 }

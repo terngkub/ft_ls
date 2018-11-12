@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 14:04:47 by nattapol          #+#    #+#             */
-/*   Updated: 2018/11/12 15:18:34 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/12 16:39:00 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,22 @@ static void	parse_flag(t_options *options, char *flag)
 	++flag;
 	while (*flag)
 	{
-		if (ft_strchr("RaAdltSr1QpgG", *flag) == NULL)
+		if (ft_strchr("lRartASgip", *flag) == NULL)
 		{
 			ft_fprintf(2, "ft_ls: illegal option -- %c\n", *flag);
-			ft_fprintf(2, "usage: ft_ls [RaAdltSr1QpgG] [file ...]\n");
+			ft_fprintf(2, "usage: ft_ls [lRartASgip] [file ...]\n");
 			exit(EXIT_FAILURE);
 		}
-		(*flag == 'R') ? options->R = 1 : 0;
-		(*flag == 'a') ? options->a = 1 : 0;
-		(*flag == 'A') ? options->A = 1 : 0;
 		(*flag == 'l') ? options->l = 1 : 0;
-		(*flag == 't') ? options->t = 1 : 0;
-		(*flag == 'S') ? options->S = 1 : 0;
+		(*flag == 'R') ? options->ur = 1 : 0;
+		(*flag == 'a') ? options->a = 1 : 0;
 		(*flag == 'r') ? options->r = 1 : 0;
-		(*flag == 'p') ? options->p = 1 : 0;
+		(*flag == 't') ? options->t = 1 : 0;
+		(*flag == 'A') ? options->ua = 1 : 0;
+		(*flag == 'S') ? options->us = 1 : 0;
 		(*flag == 'g') ? options->g = 1 : 0;
+		(*flag == 'i') ? options->i = 1 : 0;
+		(*flag == 'p') ? options->p = 1 : 0;
 		++flag;
 	}
 }

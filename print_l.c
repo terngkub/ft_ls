@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 21:28:09 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/11/12 15:25:21 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/12 16:59:30 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,19 +63,13 @@ static void	print_time(t_ls_file *file)
 	free(year_str);
 }
 
-void		print_l(t_ls_file *file)
+static void	print_user_group(t_ls_file *file)
 {
 	struct passwd	*pwd;
 	struct group	*gr;
 
 	pwd = getpwuid(file->lstat->st_uid);
 	gr = getgrgid(file->lstat->st_gid);
-	print_ls_file_mode(file->lstat->st_mode);
-	print_acl_xattr(file);
-	print_space(file->parent_data->files_len
-		- ft_numlen(file->lstat->st_nlink) + 1);
-	ft_putnbr(file->lstat->st_nlink);
-	ft_putchar(' ');
 	if (!file->options->g)
 	{
 		ft_putstr(pwd->pw_name);
@@ -83,6 +77,18 @@ void		print_l(t_ls_file *file)
 	}
 	ft_putstr(gr->gr_name);
 	print_space(file->parent_data->group_len - ft_strlen(gr->gr_name) + 2);
+}
+
+void		print_l(t_ls_file *file)
+{
+	print_serial_number(file);
+	print_ls_file_mode(file->lstat->st_mode);
+	print_acl_xattr(file);
+	print_space(file->parent_data->files_len
+		- ft_numlen(file->lstat->st_nlink) + 1);
+	ft_putnbr(file->lstat->st_nlink);
+	ft_putchar(' ');
+	print_user_group(file);
 	print_space(file->parent_data->size_len - ft_numlen(file->lstat->st_size));
 	ft_putnbr(file->lstat->st_size);
 	ft_putchar(' ');

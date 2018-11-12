@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 20:35:55 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/11/11 23:49:29 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/12 16:40:44 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,15 @@ typedef struct			s_btree
 	struct s_btree		*right;
 }						t_btree;
 
-t_btree	*btree_create_node(void *item);
-void    btree_insert(t_btree **root, void *item, int (*compare)(void *, void *));
-void    btree_apply_prefix(t_btree *root, void (*applyf)(void *));
-void    btree_apply_infix(t_btree *root, void (*applyf)(void *));
-void    btree_apply_suffix(t_btree *root, void (*applyf)(void *));
+t_btree					*btree_create_node(void *item);
+void					btree_insert(t_btree **root, void *item,
+							int (*compare)(void *, void *));
+void					btree_apply_prefix(t_btree *root,
+							void (*applyf)(void *));
+void					btree_apply_infix(t_btree *root,
+							void (*applyf)(void *));
+void					btree_apply_suffix(t_btree *root,
+							void (*applyf)(void *));
 
 /*
 ** Parse
@@ -51,18 +55,16 @@ void    btree_apply_suffix(t_btree *root, void (*applyf)(void *));
 
 typedef struct			s_options
 {
-	char	R;
-	char	a;
-	char	A;
-	char	l;
-	char	t;
-	char	S;
-	char	r;
-	char	one;
-	char	Q;
-	char	p;
-	char	g;
-	char	G;
+	char				l;
+	char				ur;
+	char				a;
+	char				r;
+	char				t;
+	char				ua;
+	char				us;
+	char				p;
+	char				g;
+	char				i;
 }						t_options;
 
 typedef	struct			s_ls_data
@@ -72,13 +74,13 @@ typedef	struct			s_ls_data
 	int					flag_error;
 }						t_ls_data;
 
-void        parse_args(t_ls_data *ls_data, int argc, char **argv);
+void					parse_args(t_ls_data *ls_data, int argc, char **argv);
 
 /*
 ** Compare
 */
 
-int     compare_file(void *a, void *b);
+int						compare_file(void *a, void *b);
 
 /*
 ** Process
@@ -102,36 +104,38 @@ typedef struct			s_ls_file
 	struct stat			*lstat;
 	t_btree				*tree;
 	t_options			*options;
-	t_ls_filedata			*parent_data;
-	t_ls_filedata			*children_data;
+	t_ls_filedata		*parent_data;
+	t_ls_filedata		*children_data;
 }						t_ls_file;
 
-t_ls_file    *init_file(char *name, char *path, t_options *options, t_ls_filedata *max);
-void    process_path(t_ls_file *file);
-void	process_queue(t_ls_data *ls_data);
+t_ls_file				*init_file(char *name, char *path,
+							t_options *options,
+							t_ls_filedata *max);
+void					process_path(t_ls_file *file);
+void					process_queue(t_ls_data *ls_data);
 
 /*
 ** Print
 */
-char        get_entry_type(mode_t mode);
-void    print_ls_file_mode(mode_t mode);
-void    print_acl_xattr(t_ls_file *file);
-void print_l(t_ls_file *file);
 
-void print_tree(void *dir_data);
+void					print_serial_number(t_ls_file *file);
+char					get_entry_type(mode_t mode);
+void					print_ls_file_mode(mode_t mode);
+void					print_acl_xattr(t_ls_file *file);
+void					print_l(t_ls_file *file);
+void					print_tree(void *dir_data);
 
 /*
 ** Free
 */
 
-void	btree_delete(t_btree *root);
-void	free_file(void *file_var);
+void					btree_delete(t_btree *root);
+void					free_file(void *file_var);
 
 /*
 ** Error
 */
 
-void ft_error(char *str);
-
+void					ft_error(char *str);
 
 #endif
