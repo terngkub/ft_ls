@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 20:35:55 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/11/12 21:19:40 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/12 22:48:24 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ t_ls_file				*init_file(char *name, char *path,
 							t_ls_filedata *max);
 void					process_path(t_ls_file *file);
 void					process_queue(t_ls_data *ls_data);
+void					process_data(t_ls_data *ls_data);
+void					process_recursive(void *file_data);
 
 /*
 ** Print

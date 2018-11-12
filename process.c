@@ -6,23 +6,11 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 19:47:59 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/11/12 18:28:39 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/12 22:47:20 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
-void	handle_option_r(void *file_data)
-{
-	t_ls_file		*file;
-
-	file = (t_ls_file *)file_data;
-	if (file->options->ur == 1
-			&& ft_strcmp(file->name, ".") != 0
-			&& ft_strcmp(file->name, "..") != 0
-			&& S_ISDIR(file->stat->st_mode))
-		process_path(file);
-}
 
 int		check_options(char *name, t_options *options)
 {
@@ -66,8 +54,7 @@ void	process_path(t_ls_file *file)
 		ft_printf("\n%s:\n", file->path);
 	process_dir(file);
 	print_tree(file);
-	btree_apply_infix(file->tree, handle_option_r);
-	free_file(file);
+	btree_apply_infix(file->tree, process_recursive);
 }
 
 void	process_queue(t_ls_data *ls_data)
@@ -76,12 +63,6 @@ void	process_queue(t_ls_data *ls_data)
 	char			**name;
 	size_t			queue_size;
 
-	if (ls_data->dir_queue->size == 0)
-	{
-		file = init_file(".", "", &ls_data->options, NULL);
-		process_path(file);
-		return ;
-	}
 	queue_size = ls_data->dir_queue->size;
 	while (ls_data->dir_queue->size)
 	{
@@ -94,6 +75,21 @@ void	process_queue(t_ls_data *ls_data)
 		}
 		file = init_file(*name, "", &ls_data->options, NULL);
 		process_path(file);
+		free_file(file);
 		free(name);
 	}
+}
+
+void	process_data(t_ls_data *ls_data)
+{
+	t_ls_file		*file;
+
+	if (ls_data->dir_queue->size == 0)
+	{
+		file = init_file(".", "", &ls_data->options, NULL);
+		process_path(file);
+		free_file(file);
+	}
+	else
+		process_queue(ls_data);
 }
