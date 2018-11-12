@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 23:01:13 by nattapol          #+#    #+#             */
-/*   Updated: 2018/11/12 16:39:28 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/12 21:25:12 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ int			compare_file(void *a, void *b)
 
 	file_a = (t_ls_file *)a;
 	file_b = (t_ls_file *)b;
-	if (file_a->options->t)
-		compare_result = compare_time(file_a, file_b);
-	else if (file_a->options->us)
+	if (file_a->options->us)
 		compare_result = compare_size(file_a, file_b);
+	else if (file_a->options->t)
+		compare_result = compare_time(file_a, file_b);
 	else
 		compare_result = ft_strcmp(file_a->name, file_b->name);
 	if (file_a->options->r)

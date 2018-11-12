@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 20:35:55 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/11/12 16:40:44 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/12 21:19:40 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,9 @@ typedef struct			s_ls_filedata
 	size_t				user_len;
 	size_t				group_len;
 	size_t				size_len;
+	int					have_dev;
+	size_t				major_len;
+	size_t				minor_len;
 	size_t				name_len;
 }						t_ls_filedata;
 
@@ -131,6 +134,12 @@ void					print_tree(void *dir_data);
 
 void					btree_delete(t_btree *root);
 void					free_file(void *file_var);
+
+/*
+** Utils
+*/
+
+void					print_space(int len);
 
 /*
 ** Error

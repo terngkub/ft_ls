@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:55:51 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/11/11 21:09:09 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/12 19:41:25 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,33 @@ static char				*create_path(char *old_path, char *name)
 	return (ret);
 }
 
+static void				get_size_max(t_ls_file *file)
+{
+	size_t				size_len;
+	size_t				major_len;
+	size_t				minor_len;
+	size_t				dev_len;
+
+	if (S_ISBLK(file->lstat->st_mode) || S_ISCHR(file->lstat->st_mode))
+	{
+		major_len = ft_numlen(major(file->lstat->st_rdev));
+		if (major_len > file->parent_data->major_len)
+			file->parent_data->major_len = major_len;
+		minor_len = ft_numlen(minor(file->lstat->st_rdev));
+		if (minor_len > file->parent_data->minor_len)
+			file->parent_data->minor_len = minor_len;
+		dev_len = major_len + minor_len + 2;
+		if (dev_len > file->parent_data->size_len)
+			file->parent_data->size_len = dev_len;
+	}
+	else
+	{
+		size_len = ft_numlen(file->lstat->st_size);
+		if (size_len > file->parent_data->size_len)
+			file->parent_data->size_len = size_len;
+	}
+}
+
 static void				get_max(t_ls_file *file)
 {
 	struct passwd		*pwd;
@@ -50,9 +77,7 @@ static void				get_max(t_ls_file *file)
 	len = ft_strlen(gr->gr_name);
 	if (len > file->parent_data->group_len)
 		file->parent_data->group_len = len;
-	len = ft_numlen(file->lstat->st_size);
-	if (len > file->parent_data->size_len)
-		file->parent_data->size_len = len;
+	get_size_max(file);
 	len = ft_strlen(file->name);
 	if (len > file->parent_data->name_len)
 		file->parent_data->name_len = len;
@@ -69,6 +94,9 @@ static t_ls_filedata	*init_filedata(void)
 	filedata->user_len = 0;
 	filedata->group_len = 0;
 	filedata->size_len = 0;
+	filedata->have_dev = 0;
+	filedata->major_len = 0;
+	filedata->minor_len = 0;
 	filedata->name_len = 0;
 	return (filedata);
 }

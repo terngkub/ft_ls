@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 19:47:59 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/11/12 16:39:48 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/12 18:28:39 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	process_dir(t_ls_file *file)
 		if (!(err = ft_strjoin("ft_ls: ", file->path)))
 			ft_error("Error: ft_strjoin failed\n");
 		perror(err);
+		free(err);
 		return ;
 	}
 	while ((dirent = readdir(dir)))
@@ -66,6 +67,7 @@ void	process_path(t_ls_file *file)
 	process_dir(file);
 	print_tree(file);
 	btree_apply_infix(file->tree, handle_option_r);
+	free_file(file);
 }
 
 void	process_queue(t_ls_data *ls_data)
@@ -78,7 +80,6 @@ void	process_queue(t_ls_data *ls_data)
 	{
 		file = init_file(".", "", &ls_data->options, NULL);
 		process_path(file);
-		free_file(file);
 		return ;
 	}
 	queue_size = ls_data->dir_queue->size;
@@ -93,6 +94,6 @@ void	process_queue(t_ls_data *ls_data)
 		}
 		file = init_file(*name, "", &ls_data->options, NULL);
 		process_path(file);
-		free_file(file);
+		free(name);
 	}
 }
