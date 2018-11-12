@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 23:01:13 by nattapol          #+#    #+#             */
-/*   Updated: 2018/11/11 22:49:37 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/12 15:01:27 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	compare_size(t_ls_file *file_a, t_ls_file *file_b)
 	size_b = file_b->stat->st_size;
 	if (size_a == size_b)
 		return (ft_strcmp(file_a->name, file_b->name));
-	return ((size_a > size_b) ? 1 : -1);
+	return ((size_a > size_b) ? -1 : 1);
 }
 
 int			compare_file(void *a, void *b)

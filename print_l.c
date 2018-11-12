@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 21:28:09 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/11/11 23:05:09 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/11/12 15:25:21 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,11 @@ void		print_l(t_ls_file *file)
 		- ft_numlen(file->lstat->st_nlink) + 1);
 	ft_putnbr(file->lstat->st_nlink);
 	ft_putchar(' ');
-	ft_putstr(pwd->pw_name);
-	print_space(file->parent_data->user_len - ft_strlen(pwd->pw_name) + 2);
+	if (!file->options->g)
+	{
+		ft_putstr(pwd->pw_name);
+		print_space(file->parent_data->user_len - ft_strlen(pwd->pw_name) + 2);
+	}
 	ft_putstr(gr->gr_name);
 	print_space(file->parent_data->group_len - ft_strlen(gr->gr_name) + 2);
 	print_space(file->parent_data->size_len - ft_numlen(file->lstat->st_size));
