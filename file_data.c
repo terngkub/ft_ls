@@ -1,43 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   file_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/11 23:48:49 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/18 15:38:35 by nkamolba         ###   ########.fr       */
+/*   Created: 2018/12/18 15:35:12 by nkamolba          #+#    #+#             */
+/*   Updated: 2018/12/18 15:47:50 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	btree_delete(t_btree *root)
+t_ls_filedata	*init_filedata(void)
 {
-	if (root)
-	{
-		btree_delete(root->left);
-		btree_delete(root->right);
-		free_file(root->item);
-		free(root);
-	}
-}
+	t_ls_filedata		*filedata;
 
-void	free_file(void *file_var)
-{
-	t_ls_file	*file;
-
-	file = (t_ls_file *)file_var;
-	if (!file)
-		return ;
-	free(file->name);
-	free(file->path);
-	free(file->lstat);
-	if (file->data)
-		free(file->data);
-	if (file->tree)
-	{
-		btree_delete(file->tree);
-	}
-	free(file);
+	if (!(filedata = (t_ls_filedata *)malloc(sizeof(t_ls_filedata))))
+		ft_error("Error: malloc failed");
+	filedata->files_len = 0;
+	filedata->user_len = 0;
+	filedata->group_len = 0;
+	filedata->size_len = 0;
+	filedata->have_dev = 0;
+	filedata->major_len = 0;
+	filedata->minor_len = 0;
+	filedata->name_len = 0;
+	return (filedata);
 }

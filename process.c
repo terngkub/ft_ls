@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 19:47:59 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/18 14:32:57 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/18 15:38:51 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	process_dir(t_ls_file *file)
 		if (check_options(dirent->d_name, file->options))
 		{
 			new_file = init_file(dirent->d_name, file->path,
-					file->options, file->children_data);
+					file->options, file->data);
 			btree_insert(&(file->tree), new_file, compare_file);
 		}
 	}

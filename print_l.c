@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 21:28:09 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/17 21:05:22 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/18 15:22:07 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ static void	print_user_group(t_ls_file *file)
 		}
 		else
 		{
-			perror("error:");
 			ft_putnbr(file->lstat->st_uid);
 			print_space(file->parent_data->user_len - ft_numlen(file->lstat->st_uid) + 2);
 		}

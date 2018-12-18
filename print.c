@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 17:04:50 by nattapol          #+#    #+#             */
-/*   Updated: 2018/12/18 14:24:23 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/18 15:38:43 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void		print_tree(void *file_data)
 	if (S_ISDIR(file->lstat->st_mode))
 	{
 		if (file->options->l)
-			ft_printf("total %d\n", file->children_data->blocks);
+			ft_printf("total %d\n", file->data->blocks);
 		btree_apply_infix(file->tree, print_item);
 	}
 }
