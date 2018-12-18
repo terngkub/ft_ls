@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 21:28:09 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/18 15:22:07 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/18 17:22:54 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ static void	print_user_group(t_ls_file *file)
 	struct passwd	*pwd;
 	struct group	*gr;
 
-	gr = getgrgid(file->lstat->st_gid);
 	if (!file->options->g)
 	{
 		if ((pwd = getpwuid(file->lstat->st_uid)))
@@ -74,7 +73,7 @@ static void	print_user_group(t_ls_file *file)
 			print_space(file->parent_data->user_len - ft_numlen(file->lstat->st_uid) + 2);
 		}
 	}
-	ft_putstr(gr->gr_name);
+	gr = getgrgid(file->lstat->st_gid);
 	print_space(file->parent_data->group_len - ft_strlen(gr->gr_name) + 2);
 }
 

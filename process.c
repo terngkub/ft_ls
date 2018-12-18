@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 19:47:59 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/18 15:38:51 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/18 18:38:56 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	process_dir(t_ls_file *file)
 		{
 			new_file = init_file(dirent->d_name, file->path,
 					file->options, file->data);
-			btree_insert(&(file->tree), new_file, compare_file);
+			if (getgrgid(new_file->lstat->st_gid))
+				btree_insert(&(file->tree), new_file, compare_file);
 		}
 	}
 	closedir(dir);
@@ -50,11 +51,14 @@ void	process_dir(t_ls_file *file)
 
 void	process_path(t_ls_file *file)
 {
-	if (file->parent_data)
-		ft_printf("\n%s:\n", file->path);
-	process_dir(file);
-	print_tree(file);
-	btree_apply_infix(file->tree, process_recursive);
+	if (S_ISDIR(file->lstat->st_mode) && getgrgid(file->lstat->st_gid))
+	{
+		if (file->parent_data)
+			ft_printf("\n%s:\n", file->path);
+		process_dir(file);
+		print_tree(file);
+		btree_apply_infix(file->tree, process_recursive);
+	}
 }
 
 void	process_queue(t_ls_data *ls_data)

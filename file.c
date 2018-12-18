@@ -6,34 +6,11 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:55:51 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/18 16:07:42 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/18 16:25:59 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
-/*
-static char				*create_path(char *old_path, char *name)
-{
-	size_t				path_len;
-	size_t				name_len;
-	char				*new_path;
-	char				*ret;
-
-	path_len = ft_strlen(old_path);
-	name_len = ft_strlen(name);
-	if (!(new_path = (char *)malloc(path_len + 1 + name_len + 1)))
-		ft_error("Error: malloc failed.");
-	ret = new_path;
-	while (*old_path)
-		*new_path++ = *old_path++;
-	*new_path++ = '/';
-	while (*name)
-		*new_path++ = *name++;
-	*new_path = '\0';
-	return (ret);
-}
-*/
 
 static void				get_path(t_ls_file *file, char *path)
 {
@@ -43,13 +20,16 @@ static void				get_path(t_ls_file *file, char *path)
 	char				*name_tmp;
 
 	if (!*path)
+	{
 		if (!(file->path = ft_strdup(file->name)))
 			ft_error("Error: ft_strdup failed");
+		return ;
+	}
 	path_len = ft_strlen(path);
 	name_len = ft_strlen(file->name);
-	if (!(file->path = (char *)malloc(path_len + name_len + 2)))
+	if (!(path_tmp = (char *)malloc(path_len + name_len + 2)))
 		ft_error("Error: malloc failed.");
-	path_tmp = file->path;
+	file->path = path_tmp;
 	while (*path)
 		*path_tmp++ = *path++;
 	*path_tmp++ = '/';
