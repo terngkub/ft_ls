@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 20:35:55 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/17 20:06:57 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/18 14:24:48 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ typedef struct			s_ls_file
 {
 	char				*name;
 	char				*path;
-	struct stat			*stat;
+	//struct stat			*stat;
 	struct stat			*lstat;
 	t_btree				*tree;
 	t_options			*options;

@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:55:51 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/18 13:49:23 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/18 14:37:18 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,28 +103,6 @@ static t_ls_filedata	*init_filedata(void)
 	return (filedata);
 }
 
-void				get_stat(t_ls_file *file)
-{
-	struct stat *s;
-	struct stat *ls;
-
-	if (!(s = (struct stat *)malloc(sizeof(struct stat))))
-		ft_error("Error: malloc failed");
-	stat(file->path, s);
-	if (!(file->stat = (struct stat *)malloc(sizeof(struct stat))))
-		ft_error("Error: malloc failed");
-	ft_memcpy(file->stat, s, sizeof(struct stat));
-	free(s);
-
-	if (!(ls = (struct stat *)malloc(sizeof(struct stat))))
-		ft_error("Error: malloc failed");
-	lstat(file->path, ls);
-	if (!(file->lstat = (struct stat *)malloc(sizeof(struct stat))))
-		ft_error("Error: malloc failed");
-	ft_memcpy(file->lstat, ls, sizeof(struct stat));
-	free(ls);
-}
-
 t_ls_file				*init_file(char *name, char *path, t_options *options,
 							t_ls_filedata *filedata)
 {
@@ -134,13 +112,11 @@ t_ls_file				*init_file(char *name, char *path, t_options *options,
 		ft_error("Error: malloc failed");
 	if (!(file->name = ft_strdup(name)))
 		ft_error("Error: ft_strdup failed");
+	// protect ft_strdup(name);
 	if (!*path)
 		file->path = ft_strdup(name);
 	else
 		file->path = create_path(path, name);
-	if (!(file->stat = (struct stat *)malloc(sizeof(struct stat))))
-		ft_error("Error: malloc failed");
-	stat(file->path, file->stat);
 	if (!(file->lstat = (struct stat *)malloc(sizeof(struct stat))))
 		ft_error("Error: malloc failed");
 	lstat(file->path, file->lstat);
@@ -149,7 +125,7 @@ t_ls_file				*init_file(char *name, char *path, t_options *options,
 	file->parent_data = filedata;
 	if (filedata != NULL)
 		get_max(file);
-	file->children_data = (S_ISDIR(file->stat->st_mode))
+	file->children_data = (S_ISDIR(file->lstat->st_mode))
 		? init_filedata() : NULL;
 	return (file);
 }
