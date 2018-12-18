@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 23:01:13 by nattapol          #+#    #+#             */
-/*   Updated: 2018/11/12 21:25:12 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/18 14:01:57 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static int	compare_time(t_ls_file *file_a, t_ls_file *file_b)
 {
-	if (file_a->stat->st_mtime == file_b->stat->st_mtime)
+	if (file_a->lstat->st_mtime == file_b->lstat->st_mtime)
 		return (ft_strcmp(file_a->name, file_b->name));
-	return ((file_a->stat->st_mtime > file_b->stat->st_mtime) ? -1 : 1);
+	return ((file_a->lstat->st_mtime > file_b->lstat->st_mtime) ? -1 : 1);
 }
 
 static int	compare_size(t_ls_file *file_a, t_ls_file *file_b)
@@ -24,8 +24,8 @@ static int	compare_size(t_ls_file *file_a, t_ls_file *file_b)
 	int			size_a;
 	int			size_b;
 
-	size_a = file_a->stat->st_size;
-	size_b = file_b->stat->st_size;
+	size_a = file_a->lstat->st_size;
+	size_b = file_b->lstat->st_size;
 	if (size_a == size_b)
 		return (ft_strcmp(file_a->name, file_b->name));
 	return ((size_a > size_b) ? -1 : 1);

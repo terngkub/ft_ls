@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 20:35:55 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/11/12 22:48:24 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/17 20:06:57 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,11 +142,6 @@ void					free_file(void *file_var);
 */
 
 void					print_space(int len);
-
-/*
-** Error
-*/
-
 void					ft_error(char *str);
 
 #endif

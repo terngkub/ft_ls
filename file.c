@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:55:51 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/11/12 19:41:25 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/18 13:49:23 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,10 @@ static void				get_max(t_ls_file *file)
 	len = ft_numlen(file->lstat->st_nlink);
 	if (len > file->parent_data->files_len)
 		file->parent_data->files_len = len;
-	pwd = getpwuid(file->lstat->st_uid);
-	len = ft_strlen(pwd->pw_name);
+	if ((pwd = getpwuid(file->lstat->st_uid)))
+		len = ft_strlen(pwd->pw_name);
+	else
+		len = ft_numlen(file->lstat->st_uid);
 	if (len > file->parent_data->user_len)
 		file->parent_data->user_len = len;
 	gr = getgrgid(file->lstat->st_gid);
@@ -99,6 +101,28 @@ static t_ls_filedata	*init_filedata(void)
 	filedata->minor_len = 0;
 	filedata->name_len = 0;
 	return (filedata);
+}
+
+void				get_stat(t_ls_file *file)
+{
+	struct stat *s;
+	struct stat *ls;
+
+	if (!(s = (struct stat *)malloc(sizeof(struct stat))))
+		ft_error("Error: malloc failed");
+	stat(file->path, s);
+	if (!(file->stat = (struct stat *)malloc(sizeof(struct stat))))
+		ft_error("Error: malloc failed");
+	ft_memcpy(file->stat, s, sizeof(struct stat));
+	free(s);
+
+	if (!(ls = (struct stat *)malloc(sizeof(struct stat))))
+		ft_error("Error: malloc failed");
+	lstat(file->path, ls);
+	if (!(file->lstat = (struct stat *)malloc(sizeof(struct stat))))
+		ft_error("Error: malloc failed");
+	ft_memcpy(file->lstat, ls, sizeof(struct stat));
+	free(ls);
 }
 
 t_ls_file				*init_file(char *name, char *path, t_options *options,
