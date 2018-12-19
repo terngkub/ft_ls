@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:55:51 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/18 16:25:59 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/19 20:02:35 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,14 @@ static void				get_path(t_ls_file *file, char *path)
 	*path_tmp = '\0';
 }
 
-static void				get_lstat(t_ls_file *file)
+static void				get_stat(t_ls_file *file)
 {
-	if (!(file->lstat = (struct stat *)malloc(sizeof(struct stat))))
+	if (!(file->stat = (struct stat *)malloc(sizeof(struct stat))))
 		ft_error("Error: malloc failed");
-	lstat(file->path, file->lstat);
+	if (file->options->l)
+		lstat(file->path, file->stat);
+	else
+		stat(file->path, file->stat);
 }
 
 t_ls_file				*init_file(char *name, char *path, t_options *options,
@@ -56,12 +59,13 @@ t_ls_file				*init_file(char *name, char *path, t_options *options,
 	if (!(file->name = ft_strdup(name)))
 		ft_error("Error: ft_strdup failed");
 	get_path(file, path);
-	get_lstat(file);
 	file->tree = NULL;
 	file->options = options;
+	get_stat(file);
 	file->parent_data = filedata;
 	if (file->parent_data != NULL)
 		get_max(file);
-	file->data = (S_ISDIR(file->lstat->st_mode)) ? init_filedata() : NULL;
+	file->data = (S_ISDIR(file->stat->st_mode)) ? init_filedata() : NULL;
+	file->error = 0;
 	return (file);
 }

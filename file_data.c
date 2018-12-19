@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 15:35:12 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/18 15:47:50 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/19 16:27:43 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ t_ls_filedata	*init_filedata(void)
 	filedata->major_len = 0;
 	filedata->minor_len = 0;
 	filedata->name_len = 0;
+	filedata->blocks = 0;
 	return (filedata);
 }

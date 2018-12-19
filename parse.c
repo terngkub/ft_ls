@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 14:04:47 by nattapol          #+#    #+#             */
-/*   Updated: 2018/11/12 16:39:00 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/19 20:00:58 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,15 @@ static void	parse_flag(t_options *options, char *flag)
 void		parse_args(t_ls_data *ls_data, int argc, char **argv)
 {
 	int	i;
+	t_ls_file *file;
 
 	i = 1;
 	while (i < argc && argv[i][0] == '-')
-	{
 		parse_flag(&(ls_data->options), argv[i++]);
-	}
+	ls_data->tree = NULL;
 	while (i < argc)
 	{
-		if (argv[i][0] == '-')
-		{
-			ft_fprintf(2, "ft_ls: %s: No such file or directory\n", argv[i++]);
-			ls_data->flag_error = 1;
-		}
-		else
-			ft_queue_enqueue(ls_data->dir_queue, &argv[i++]);
+		file = init_file(argv[i++], "", &ls_data->options, NULL);
+		btree_insert(&(ls_data->tree), file, compare_file);
 	}
 }

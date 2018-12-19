@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 19:47:59 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/18 18:38:56 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/19 20:04:55 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,78 @@ void	process_dir(t_ls_file *file)
 		{
 			new_file = init_file(dirent->d_name, file->path,
 					file->options, file->data);
-			if (getgrgid(new_file->lstat->st_gid))
+			if (getgrgid(new_file->stat->st_gid))
 				btree_insert(&(file->tree), new_file, compare_file);
 		}
 	}
 	closedir(dir);
 }
 
-void	process_path(t_ls_file *file)
+void	process_path(void *file_void)
 {
-	if (S_ISDIR(file->lstat->st_mode) && getgrgid(file->lstat->st_gid))
-	{
+	t_ls_file	*file;
+
+	file = (t_ls_file *)file_void;
+	// if (S_ISDIR(file->stat->st_mode) && getgrgid(file->stat->st_gid))
+	// {
 		if (file->parent_data)
 			ft_printf("\n%s:\n", file->path);
+		process_dir(file);
+		print_tree(file);
+		btree_apply_infix(file->tree, process_recursive);
+	// }
+}
+
+void	process_first_tree(void *file_void)
+{
+	t_ls_file	*file;
+
+	file = (t_ls_file *)file_void;
+	if (!file->error)
+	{
+		ft_printf("%s:\n", file->path);
 		process_dir(file);
 		print_tree(file);
 		btree_apply_infix(file->tree, process_recursive);
 	}
 }
 
+void	process_error(void *file_void)
+{
+	t_ls_file		*file;
+	DIR				*dir;
+	char			*err;
+
+	file = (t_ls_file *)file_void;
+	if ((dir = opendir(file->path)) == NULL)
+	{
+		if (errno == 2)
+		{
+			file->error = 1;
+			if (!(err = ft_strjoin("ft_ls: ", file->path)))
+				ft_error("Error: ft_strjoin failed\n");
+			perror(err);
+			free(err);
+		}
+		return ;
+	}
+	closedir(dir);
+}
+
+void	process_data(t_ls_data *ls_data)
+{
+	t_ls_file	*file;
+
+	if (ls_data->tree == NULL)
+	{
+		file = init_file(".", "", &ls_data->options, NULL);
+		btree_insert(&(ls_data->tree), file, compare_file);
+	}
+	btree_apply_infix(ls_data->tree, process_error);
+	btree_apply_infix(ls_data->tree, process_first_tree);
+}
+
+/*
 void	process_queue(t_ls_data *ls_data)
 {
 	t_ls_file		*file;
@@ -97,3 +150,4 @@ void	process_data(t_ls_data *ls_data)
 	else
 		process_queue(ls_data);
 }
+*/

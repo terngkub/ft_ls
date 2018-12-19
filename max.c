@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 15:47:29 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/18 16:26:59 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/19 16:51:22 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ static void				get_size_max(t_ls_file *file)
 	size_t				minor_len;
 	size_t				dev_len;
 
-	if (S_ISBLK(file->lstat->st_mode) || S_ISCHR(file->lstat->st_mode))
+	if (S_ISBLK(file->stat->st_mode) || S_ISCHR(file->stat->st_mode))
 	{
-		major_len = ft_numlen(major(file->lstat->st_rdev));
+		major_len = ft_numlen(major(file->stat->st_rdev));
 		if (major_len > file->parent_data->major_len)
 			file->parent_data->major_len = major_len;
 
-		minor_len = ft_numlen(minor(file->lstat->st_rdev));
+		minor_len = ft_numlen(minor(file->stat->st_rdev));
 		if (minor_len > file->parent_data->minor_len)
 			file->parent_data->minor_len = minor_len;
 
@@ -35,7 +35,7 @@ static void				get_size_max(t_ls_file *file)
 	}
 	else
 	{
-		size_len = ft_numlen(file->lstat->st_size);
+		size_len = ft_numlen(file->stat->st_size);
 		if (size_len > file->parent_data->size_len)
 			file->parent_data->size_len = size_len;
 	}
@@ -47,16 +47,16 @@ void				get_max(t_ls_file *file)
 	struct group		*gr;
 	size_t				len;
 
-	len = ft_numlen(file->lstat->st_nlink);
+	len = ft_numlen(file->stat->st_nlink);
 	if (len > file->parent_data->files_len)
 		file->parent_data->files_len = len;
 		
-	pwd = getpwuid(file->lstat->st_uid);
-	len = (pwd) ? ft_strlen(pwd->pw_name) : ft_numlen(file->lstat->st_uid);
+	pwd = getpwuid(file->stat->st_uid);
+	len = (pwd) ? ft_strlen(pwd->pw_name) : ft_numlen(file->stat->st_uid);
 	if (len > file->parent_data->user_len)
 		file->parent_data->user_len = len;
 
-	gr = getgrgid(file->lstat->st_gid);
+	gr = getgrgid(file->stat->st_gid);
 	len = (gr) ? ft_strlen(gr->gr_name) : 0;
 	if (len > file->parent_data->group_len)
 		file->parent_data->group_len = len;
@@ -66,5 +66,5 @@ void				get_max(t_ls_file *file)
 	len = ft_strlen(file->name);
 	if (len > file->parent_data->name_len)
 		file->parent_data->name_len = len;
-	file->parent_data->blocks += file->lstat->st_blocks;
+	file->parent_data->blocks += file->stat->st_blocks;
 }

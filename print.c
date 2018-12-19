@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 17:04:50 by nattapol          #+#    #+#             */
-/*   Updated: 2018/12/18 15:38:43 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/19 17:32:57 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ void		print_serial_number(t_ls_file *file)
 {
 	if (file->options->i)
 	{
-		ft_printf("%d ", file->lstat->st_ino);
+		ft_printf("%d ", file->stat->st_ino);
 	}
 }
 
 static void	handle_p(t_ls_file *file)
 {
-	if (file->options->p && S_ISDIR(file->lstat->st_mode))
+	if (file->options->p && S_ISDIR(file->stat->st_mode))
 		ft_strfreecat_back(&(file->name), "/");
 }
 
@@ -33,7 +33,10 @@ static void	print_item(void *file_data)
 	file = (t_ls_file *)file_data;
 	handle_p(file);
 	if (file->options->l || file->options->g)
+	{
 		print_l(file);
+
+	}
 	else
 	{
 		print_serial_number(file);
@@ -46,7 +49,7 @@ void		print_tree(void *file_data)
 	t_ls_file	*file;
 
 	file = (t_ls_file *)file_data;
-	if (S_ISDIR(file->lstat->st_mode))
+	if (S_ISDIR(file->stat->st_mode))
 	{
 		if (file->options->l)
 			ft_printf("total %d\n", file->data->blocks);

@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 20:35:55 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/18 15:47:17 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/19 20:00:24 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,25 +67,6 @@ typedef struct			s_options
 	char				i;
 }						t_options;
 
-typedef	struct			s_ls_data
-{
-	t_options			options;
-	t_queue				*dir_queue;
-	int					flag_error;
-}						t_ls_data;
-
-void					parse_args(t_ls_data *ls_data, int argc, char **argv);
-
-/*
-** Compare
-*/
-
-int						compare_file(void *a, void *b);
-
-/*
-** File Data
-*/
-
 typedef struct			s_ls_filedata
 {
 	size_t				blocks;
@@ -99,41 +80,46 @@ typedef struct			s_ls_filedata
 	size_t				name_len;
 }						t_ls_filedata;
 
-t_ls_filedata			*init_filedata(void);
-
-/*
-** File
-*/
-
 typedef struct			s_ls_file
 {
 	char				*name;
 	char				*path;
-	struct stat			*lstat;
+	struct stat			*stat;
 	t_btree				*tree;
 	t_options			*options;
 	t_ls_filedata		*parent_data;
 	t_ls_filedata		*data;
+	int					error;
 }						t_ls_file;
 
-t_ls_file				*init_file(char *name, char *path,
-							t_options *options,
-							t_ls_filedata *max);
+typedef	struct			s_ls_data
+{
+	t_options			options;
+	t_btree				*tree;
+	int					flag_error;
+}						t_ls_data;
 
-/*
-** Max
-*/
-
-void					get_max(t_ls_file *file);
+void					parse_args(t_ls_data *ls_data, int argc, char **argv);
 
 /*
 ** Process
 */
 
-void					process_path(t_ls_file *file);
+t_ls_filedata			*init_filedata(void);
+t_ls_file				*init_file(char *name, char *path,
+							t_options *options,
+							t_ls_filedata *max);
+void					get_max(t_ls_file *file);
+void					process_path(void *file);
 void					process_queue(t_ls_data *ls_data);
 void					process_data(t_ls_data *ls_data);
 void					process_recursive(void *file_data);
+
+/*
+** Compare
+*/
+
+int						compare_file(void *a, void *b);
 
 /*
 ** Print

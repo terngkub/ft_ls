@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 22:46:11 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/18 14:24:28 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/19 16:51:22 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@ void	process_recursive(void *file_data)
 	if (file->options->ur == 1
 			&& ft_strcmp(file->name, ".") != 0
 			&& ft_strcmp(file->name, "..") != 0
-			&& S_ISDIR(file->lstat->st_mode))
+			&& S_ISDIR(file->stat->st_mode))
 		process_path(file);
 }

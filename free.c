@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 23:48:49 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/18 15:38:35 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/19 16:51:00 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	free_file(void *file_var)
 		return ;
 	free(file->name);
 	free(file->path);
-	free(file->lstat);
+	free(file->stat);
 	if (file->data)
 		free(file->data);
 	if (file->tree)
