@@ -6,13 +6,13 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 14:04:47 by nattapol          #+#    #+#             */
-/*   Updated: 2018/12/20 17:29:27 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/20 18:44:36 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static void init_options(t_options *options)
+static void	init_options(t_options *options)
 {
 	options->l = 0;
 	options->ur = 0;
@@ -53,9 +53,9 @@ static void	parse_flag(t_options *options, char *flag)
 
 void		parse_args(t_ls_data *ls_data, int argc, char **argv)
 {
-	int	i;
-	int	size;
-	t_ls_file *file;
+	int			i;
+	int			size;
+	t_ls_file	*file;
 
 	init_options(&ls_data->options);
 	i = 1;

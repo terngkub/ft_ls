@@ -6,29 +6,27 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 15:47:29 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/20 15:41:43 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/20 18:44:13 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static void				get_size_max(t_ls_file *file)
+static void	get_size_max(t_ls_file *file)
 {
-	size_t				size_len;
-	size_t				major_len;
-	size_t				minor_len;
-	size_t				dev_len;
+	size_t			size_len;
+	size_t			major_len;
+	size_t			minor_len;
+	size_t			dev_len;
 
 	if (S_ISBLK(file->stat->st_mode) || S_ISCHR(file->stat->st_mode))
 	{
 		major_len = ft_numlen(major(file->stat->st_rdev));
 		if (major_len > file->parent_data->major_len)
 			file->parent_data->major_len = major_len;
-
 		minor_len = ft_numlen(minor(file->stat->st_rdev));
 		if (minor_len > file->parent_data->minor_len)
 			file->parent_data->minor_len = minor_len;
-
 		dev_len = major_len + minor_len + 2;
 		if (dev_len > file->parent_data->size_len)
 			file->parent_data->size_len = dev_len;
@@ -41,11 +39,11 @@ static void				get_size_max(t_ls_file *file)
 	}
 }
 
-void				get_max(t_ls_file *file)
+void		get_max(t_ls_file *file)
 {
-	struct passwd		*pwd;
-	struct group		*gr;
-	size_t				len;
+	struct passwd	*pwd;
+	struct group	*gr;
+	size_t			len;
 
 	if (!(pwd = getpwuid(file->stat->st_uid))
 			|| !(gr = getgrgid(file->stat->st_gid)))

@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 21:28:09 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/20 15:57:12 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/20 18:32:16 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,14 @@ static void	print_user_group(t_ls_file *file)
 		if ((pwd = getpwuid(file->stat->st_uid)))
 		{
 			ft_putstr(pwd->pw_name);
-			print_space(file->parent_data->user_len - ft_strlen(pwd->pw_name) + 2);
+			print_space(file->parent_data->user_len
+				- ft_strlen(pwd->pw_name) + 2);
 		}
 		else
 		{
 			ft_putnbr(file->stat->st_uid);
-			print_space(file->parent_data->user_len - ft_numlen(file->stat->st_uid) + 2);
+			print_space(file->parent_data->user_len
+				- ft_numlen(file->stat->st_uid) + 2);
 		}
 	}
 	gr = getgrgid(file->stat->st_gid);

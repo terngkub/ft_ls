@@ -6,13 +6,13 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 21:32:18 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/20 16:47:42 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/20 18:48:13 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-char	get_entry_type(mode_t mode)
+static char	get_entry_type(mode_t mode)
 {
 	if (S_ISREG(mode))
 		return ('-');
@@ -31,7 +31,7 @@ char	get_entry_type(mode_t mode)
 	return ('-');
 }
 
-void	print_ls_file_mode(mode_t mode)
+void		print_ls_file_mode(mode_t mode)
 {
 	char	mode_str[11];
 
@@ -53,7 +53,7 @@ void	print_ls_file_mode(mode_t mode)
 	ft_putstr(mode_str);
 }
 
-void	print_acl_xattr(t_ls_file *file)
+void		print_acl_xattr(t_ls_file *file)
 {
 	acl_t	acl;
 	ssize_t	xattr;

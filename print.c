@@ -6,13 +6,13 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 17:04:50 by nattapol          #+#    #+#             */
-/*   Updated: 2018/12/20 15:57:59 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/20 18:46:33 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void		print_serial_number(t_ls_file *file)
+void	print_serial_number(t_ls_file *file)
 {
 	if (file->options->i)
 	{
@@ -37,7 +37,7 @@ void	print_item(void *file_data)
 	}
 }
 
-void		print_tree(void *file_data)
+void	print_tree(void *file_data)
 {
 	t_ls_file	*file;
 

@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:55:51 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/20 16:34:20 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/20 18:34:44 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,8 @@ static void				get_path(t_ls_file *file, char *path)
 		ft_error("Error: malloc failed.");
 	file->path = path_tmp;
 	if (ft_strcmp(path, "/") != 0)
-	{
 		while (*path)
 			*path_tmp++ = *path++;
-	}
 	*path_tmp++ = '/';
 	name_tmp = file->name;
 	while (*name_tmp)

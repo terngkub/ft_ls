@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 20:35:55 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/20 13:47:28 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/20 18:50:13 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ typedef	struct			s_ls_data
 {
 	t_options			options;
 	t_ls_file			*file;
-	int					flag_error;
 }						t_ls_data;
 
 void					parse_args(t_ls_data *ls_data, int argc, char **argv);
@@ -112,9 +111,8 @@ t_ls_file				*init_file(char *name, char *path,
 							t_options *options,
 							t_ls_filedata *max);
 void					get_max(t_ls_file *file);
-void					process_path(void *file);
-void					process_queue(t_ls_data *ls_data);
 void					process_data(t_ls_data *ls_data);
+void					process_dir(t_ls_file *file);
 void					process_recursive(void *file_data);
 
 /*
@@ -128,12 +126,11 @@ int						compare_file(void *a, void *b);
 */
 
 void					print_serial_number(t_ls_file *file);
-char					get_entry_type(mode_t mode);
+void					print_item(void *file_data);
+void					print_tree(void *dir_data);
 void					print_ls_file_mode(mode_t mode);
 void					print_acl_xattr(t_ls_file *file);
 void					print_l(t_ls_file *file);
-void					print_item(void *file_data);
-void					print_tree(void *dir_data);
 
 /*
 ** Free

@@ -6,7 +6,7 @@
 #    By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/15 19:35:45 by nkamolba          #+#    #+#              #
-#    Updated: 2018/12/20 17:38:57 by nkamolba         ###   ########.fr        #
+#    Updated: 2018/12/20 18:40:43 by nkamolba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LIBFT = libft/libft.a
 FILE = main.c \
 		binary_tree.c compare.c \
 		parse.c file.c file_data.c max.c \
-		process.c process_recursive.c \
+		process.c process_dir.c process_recursive.c \
 		print.c print_mode.c print_l.c \
 		free.c utils.c
 

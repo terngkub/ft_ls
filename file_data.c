@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 15:35:12 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/19 16:27:43 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/20 18:42:53 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_ls_filedata	*init_filedata(void)
 {
-	t_ls_filedata		*filedata;
+	t_ls_filedata	*filedata;
 
 	if (!(filedata = (t_ls_filedata *)malloc(sizeof(t_ls_filedata))))
 		ft_error("Error: malloc failed");
