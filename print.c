@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 17:04:50 by nattapol          #+#    #+#             */
-/*   Updated: 2018/12/19 17:32:57 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/20 12:54:20 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	handle_p(t_ls_file *file)
 		ft_strfreecat_back(&(file->name), "/");
 }
 
-static void	print_item(void *file_data)
+void	print_item(void *file_data)
 {
 	t_ls_file	*file;
 

@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 19:47:59 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/19 20:04:55 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/20 14:10:40 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,32 @@ void	process_path(void *file_void)
 	// }
 }
 
-void	process_first_tree(void *file_void)
+void	process_first(void *file_void)
 {
 	t_ls_file	*file;
 
 	file = (t_ls_file *)file_void;
-	if (!file->error)
+	if (!file->error && S_ISDIR(file->stat->st_mode))
 	{
-		ft_printf("%s:\n", file->path);
+		if (file->options->printed)
+			ft_putchar('\n');
+		if (!file->options->only_one)
+			ft_printf("%s:\n", file->path);
 		process_dir(file);
 		print_tree(file);
 		btree_apply_infix(file->tree, process_recursive);
+	}
+}
+
+void	process_not_dir(void *file_void)
+{
+	t_ls_file	*file;
+
+	file = (t_ls_file *)file_void;
+	if (!file->error && !S_ISDIR(file->stat->st_mode))
+	{
+		file->options->printed = 1;
+		print_item(file);
 	}
 }
 
@@ -100,17 +115,19 @@ void	process_error(void *file_void)
 	closedir(dir);
 }
 
+
 void	process_data(t_ls_data *ls_data)
 {
 	t_ls_file	*file;
 
-	if (ls_data->tree == NULL)
+	if (ls_data->file->tree == NULL)
 	{
-		file = init_file(".", "", &ls_data->options, NULL);
-		btree_insert(&(ls_data->tree), file, compare_file);
+		file = init_file(".", "", &ls_data->options, ls_data->file->data);
+		btree_insert(&(ls_data->file->tree), file, compare_file);
 	}
-	btree_apply_infix(ls_data->tree, process_error);
-	btree_apply_infix(ls_data->tree, process_first_tree);
+	btree_apply_infix(ls_data->file->tree, process_error);
+	btree_apply_infix(ls_data->file->tree, process_not_dir);
+	btree_apply_infix(ls_data->file->tree, process_first);
 }
 
 /*

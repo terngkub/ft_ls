@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 20:35:55 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/19 20:00:24 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/20 13:47:28 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ typedef struct			s_options
 	char				p;
 	char				g;
 	char				i;
+	char				printed;
+	char				only_one;
 }						t_options;
 
 typedef struct			s_ls_filedata
@@ -95,7 +97,7 @@ typedef struct			s_ls_file
 typedef	struct			s_ls_data
 {
 	t_options			options;
-	t_btree				*tree;
+	t_ls_file			*file;
 	int					flag_error;
 }						t_ls_data;
 
@@ -130,6 +132,7 @@ char					get_entry_type(mode_t mode);
 void					print_ls_file_mode(mode_t mode);
 void					print_acl_xattr(t_ls_file *file);
 void					print_l(t_ls_file *file);
+void					print_item(void *file_data);
 void					print_tree(void *dir_data);
 
 /*

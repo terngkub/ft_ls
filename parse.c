@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 14:04:47 by nattapol          #+#    #+#             */
-/*   Updated: 2018/12/19 20:00:58 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/20 14:10:17 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,20 @@ static void	parse_flag(t_options *options, char *flag)
 void		parse_args(t_ls_data *ls_data, int argc, char **argv)
 {
 	int	i;
+	int	size;
 	t_ls_file *file;
 
 	i = 1;
 	while (i < argc && argv[i][0] == '-')
 		parse_flag(&(ls_data->options), argv[i++]);
-	ls_data->tree = NULL;
+	ls_data->file = init_file("", "", &ls_data->options, NULL);
+	size = 0;
 	while (i < argc)
 	{
-		file = init_file(argv[i++], "", &ls_data->options, NULL);
-		btree_insert(&(ls_data->tree), file, compare_file);
+		file = init_file(argv[i++], "", &ls_data->options, ls_data->file->data);
+		btree_insert(&(ls_data->file->tree), file, compare_file);
+		size++;
 	}
+	ls_data->options.printed = 0;
+	ls_data->options.only_one = (size == 1) ? 1 : 0;
 }

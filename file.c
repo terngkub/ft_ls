@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:55:51 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/19 20:02:35 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/20 13:06:09 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_ls_file				*init_file(char *name, char *path, t_options *options,
 	file->parent_data = filedata;
 	if (file->parent_data != NULL)
 		get_max(file);
-	file->data = (S_ISDIR(file->stat->st_mode)) ? init_filedata() : NULL;
+	file->data = init_filedata();
 	file->error = 0;
 	return (file);
 }
