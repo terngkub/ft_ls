@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 21:32:18 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/11/12 16:58:39 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/20 16:47:42 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,11 @@ void	print_ls_file_mode(mode_t mode)
 	mode_str[6] = (mode & S_IXGRP) ? 'x' : '-';
 	mode_str[7] = (mode & S_IROTH) ? 'r' : '-';
 	mode_str[8] = (mode & S_IWOTH) ? 'w' : '-';
-	mode_str[9] = (mode & S_IXOTH) ? 'x' : '-';
+	mode_str[9] = '-';
+	if (mode & S_ISVTX)
+		mode_str[9] = 't';
+	else if (mode & S_IXOTH)
+		mode_str[9] = 'x';
 	mode_str[10] = '\0';
 	ft_putstr(mode_str);
 }
