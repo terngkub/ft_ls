@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 19:47:59 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/20 15:43:46 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/20 17:10:15 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ void	process_data(t_ls_data *ls_data)
 	btree_apply_infix(ls_data->file->tree, process_error);
 	btree_apply_infix(ls_data->file->tree, process_not_dir);
 	btree_apply_infix(ls_data->file->tree, process_first);
+	free_file(ls_data->file);
 }
 
 /*

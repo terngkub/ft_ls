@@ -6,12 +6,12 @@
 #    By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/15 19:35:45 by nkamolba          #+#    #+#              #
-#    Updated: 2018/12/18 15:48:04 by nkamolba         ###   ########.fr        #
+#    Updated: 2018/12/20 16:55:54 by nkamolba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_ls
-FLAG = -Wall -Wextra -Werror -g -fsanitize=address
+FLAG = -Wall -Wextra -Werror -g
 LIB = -Llibft -lft
 LIBFT = libft/libft.a
 

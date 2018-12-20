@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 23:48:49 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/19 16:51:00 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/20 16:59:38 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ void	free_file(void *file_var)
 	if (file->data)
 		free(file->data);
 	if (file->tree)
-	{
 		btree_delete(file->tree);
-	}
 	free(file);
 }

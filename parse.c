@@ -6,11 +6,25 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 14:04:47 by nattapol          #+#    #+#             */
-/*   Updated: 2018/12/20 15:25:48 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/20 17:18:39 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+
+static void init_options(t_options *options)
+{
+	options->l = 0;
+	options->ur = 0;
+	options->a = 0;
+	options->r = 0;
+	options->t = 0;
+	options->ua = 0;
+	options->us = 0;
+	options->g = 0;
+	options->i = 0;
+	options->p = 0;
+}
 
 static void	parse_flag(t_options *options, char *flag)
 {
@@ -43,6 +57,7 @@ void		parse_args(t_ls_data *ls_data, int argc, char **argv)
 	int	size;
 	t_ls_file *file;
 
+	init_options(&ls_data->options);
 	i = 1;
 	while (i < argc && argv[i][0] == '-')
 		parse_flag(&(ls_data->options), argv[i++]);
