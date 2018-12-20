@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 14:04:47 by nattapol          #+#    #+#             */
-/*   Updated: 2018/12/20 14:10:17 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/20 15:25:48 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,5 @@ void		parse_args(t_ls_data *ls_data, int argc, char **argv)
 		size++;
 	}
 	ls_data->options.printed = 0;
-	ls_data->options.only_one = (size == 1) ? 1 : 0;
+	ls_data->options.only_one = (size > 1) ? 0 : 1;
 }

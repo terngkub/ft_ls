@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 19:47:59 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/20 14:10:40 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/20 15:43:46 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	process_path(void *file_void)
 	file = (t_ls_file *)file_void;
 	// if (S_ISDIR(file->stat->st_mode) && getgrgid(file->stat->st_gid))
 	// {
-		if (file->parent_data)
+		//if (file->parent_data)
 			ft_printf("\n%s:\n", file->path);
 		process_dir(file);
 		print_tree(file);
@@ -75,6 +75,7 @@ void	process_first(void *file_void)
 			ft_putchar('\n');
 		if (!file->options->only_one)
 			ft_printf("%s:\n", file->path);
+		file->options->printed = 1;
 		process_dir(file);
 		print_tree(file);
 		btree_apply_infix(file->tree, process_recursive);

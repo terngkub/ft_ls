@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 21:28:09 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/19 17:31:54 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/20 15:57:12 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static void	print_name(t_ls_file *file)
 		ft_printf(" -> %s", buff);
 		free(buff);
 	}
+	if (file->options->p && S_ISDIR(file->stat->st_mode))
+		ft_putchar('/');
 }
 
 static void	print_time(t_ls_file *file)
@@ -74,6 +76,7 @@ static void	print_user_group(t_ls_file *file)
 		}
 	}
 	gr = getgrgid(file->stat->st_gid);
+	ft_putstr(gr->gr_name);
 	print_space(file->parent_data->group_len - ft_strlen(gr->gr_name) + 2);
 }
 

@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 15:47:29 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/19 16:51:22 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/20 15:41:43 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,22 +47,19 @@ void				get_max(t_ls_file *file)
 	struct group		*gr;
 	size_t				len;
 
+	if (!(pwd = getpwuid(file->stat->st_uid))
+			|| !(gr = getgrgid(file->stat->st_gid)))
+		return ;
 	len = ft_numlen(file->stat->st_nlink);
 	if (len > file->parent_data->files_len)
 		file->parent_data->files_len = len;
-		
-	pwd = getpwuid(file->stat->st_uid);
-	len = (pwd) ? ft_strlen(pwd->pw_name) : ft_numlen(file->stat->st_uid);
+	len = ft_strlen(pwd->pw_name);
 	if (len > file->parent_data->user_len)
 		file->parent_data->user_len = len;
-
-	gr = getgrgid(file->stat->st_gid);
-	len = (gr) ? ft_strlen(gr->gr_name) : 0;
+	len = ft_strlen(gr->gr_name);
 	if (len > file->parent_data->group_len)
 		file->parent_data->group_len = len;
-
 	get_size_max(file);
-
 	len = ft_strlen(file->name);
 	if (len > file->parent_data->name_len)
 		file->parent_data->name_len = len;
