@@ -6,12 +6,12 @@
 #    By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/15 19:35:45 by nkamolba          #+#    #+#              #
-#    Updated: 2018/12/20 16:55:54 by nkamolba         ###   ########.fr        #
+#    Updated: 2018/12/20 17:38:57 by nkamolba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_ls
-FLAG = -Wall -Wextra -Werror -g
+FLAG = -Wall -Wextra -Werror
 LIB = -Llibft -lft
 LIBFT = libft/libft.a
 

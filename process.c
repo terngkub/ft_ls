@@ -6,7 +6,7 @@
 /*   By: nkamolba <nkamolba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 19:47:59 by nkamolba          #+#    #+#             */
-/*   Updated: 2018/12/20 17:10:15 by nkamolba         ###   ########.fr       */
+/*   Updated: 2018/12/20 17:57:26 by nkamolba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,16 @@ void	process_path(void *file_void)
 	t_ls_file	*file;
 
 	file = (t_ls_file *)file_void;
-	// if (S_ISDIR(file->stat->st_mode) && getgrgid(file->stat->st_gid))
-	// {
-		//if (file->parent_data)
-			ft_printf("\n%s:\n", file->path);
-		process_dir(file);
-		print_tree(file);
-		btree_apply_infix(file->tree, process_recursive);
-	// }
+	if (S_ISDIR(file->stat->st_mode))
+	{
+		ft_printf("\n%s:\n", file->path);
+		if (file->stat->st_mode & S_IXUSR)
+		{
+			process_dir(file);
+			print_tree(file);
+			btree_apply_infix(file->tree, process_recursive);
+		}
+	}
 }
 
 void	process_first(void *file_void)
@@ -76,9 +78,12 @@ void	process_first(void *file_void)
 		if (!file->options->only_one)
 			ft_printf("%s:\n", file->path);
 		file->options->printed = 1;
-		process_dir(file);
-		print_tree(file);
-		btree_apply_infix(file->tree, process_recursive);
+		if (file->stat->st_mode & S_IXUSR)
+		{
+			process_dir(file);
+			print_tree(file);
+			btree_apply_infix(file->tree, process_recursive);
+		}
 	}
 }
 
